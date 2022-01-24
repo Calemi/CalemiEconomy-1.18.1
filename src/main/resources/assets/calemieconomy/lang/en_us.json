@@ -1,0 +1,20 @@
+{
+  "itemGroup.calemieconomy.tabMain": "Calemi's Economy",
+
+
+
+
+
+  "lore.key.shift": "Shift",
+  "lore.key.ctrl": "Ctrl",
+  "lore.info": "Info",
+  "lore.controls": "Controls",
+  "lore.recipes": "Recipe",
+  "lore.control_type.use": "Use",
+  "lore.control_type.use-open-hand": "Use-Open-Hand",
+  "lore.control_type.sneak-use": "Sneak-Use",
+  "lore.control_type.sneak-break-block": "Sneak-Break-Block",
+  "lore.control_type.release-use": "Release-Use",
+  "lore.control_type.left-click-block": "Left-Click-Block",
+  "lore.control_type.sneak-left-click-block": "Sneak-Left-Click-Block"
+}
