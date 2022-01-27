@@ -1,0 +1,11 @@
+{
+  "replace" : false,
+  "values" : [
+    "calemieconomy:raritanium_ore",
+    "calemieconomy:raritanium_ore_deepslate",
+    "calemieconomy:coin_stack_copper",
+    "calemieconomy:coin_stack_silver",
+    "calemieconomy:coin_stack_gold",
+    "calemieconomy:coin_stack_platinum"
+  ]
+}

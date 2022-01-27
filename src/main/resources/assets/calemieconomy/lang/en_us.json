@@ -1,4 +1,18 @@
 {
+  "item.calemieconomy.raritanium": "Raritanium",
+
+
+
+
+
+  "block.calemieconomy.raritanium_ore": "Raritanium Ore",
+  "block.calemieconomy.raritanium_ore_deepslate": "Deepslate Raritanium Ore",
+  "ce.lore.raritanium_ore": "Found in the Overworld between Y levels",
+
+
+
+
+
   "itemGroup.calemieconomy.tabMain": "Calemi's Economy",
 
 
