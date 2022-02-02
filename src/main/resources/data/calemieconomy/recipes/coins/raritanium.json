@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "calemieconomy:coin_copper"
+    }
+  ],
+  "result": {
+    "item": "calemieconomy:raritanium",
+    "count": 1
+  }
+}

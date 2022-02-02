@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "coin_quarter",
+  "ingredients": [
+    {
+      "item": "calemieconomy:coin_silver"
+    },
+    {
+      "item": "calemieconomy:coin_silver"
+    },
+    {
+      "item": "calemieconomy:coin_silver"
+    },
+    {
+      "item": "calemieconomy:coin_silver"
+    },
+    {
+      "item": "calemieconomy:coin_silver"
+    }
+  ],
+  "result": {
+    "item": "calemieconomy:coin_gold",
+    "count": 1
+  }
+}

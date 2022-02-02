@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "calemieconomy:blocks/currency_network_cable_opaque"
+  }
+}

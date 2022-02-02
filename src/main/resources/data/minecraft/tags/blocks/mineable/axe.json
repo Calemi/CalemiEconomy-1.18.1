@@ -1,0 +1,8 @@
+{
+  "replace" : false,
+  "values" : [
+    "calemieconomy:currency_network_cable",
+    "calemieconomy:currency_network_cable_opaque",
+    "calemieconomy:bank"
+  ]
+}

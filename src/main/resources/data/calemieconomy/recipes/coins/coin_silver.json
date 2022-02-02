@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "coin_silver",
+  "ingredients": [
+    {
+      "item": "calemieconomy:coin_copper"
+    },
+    {
+      "item": "calemieconomy:coin_copper"
+    },
+    {
+      "item": "calemieconomy:coin_copper"
+    },
+    {
+      "item": "calemieconomy:coin_copper"
+    },
+    {
+      "item": "calemieconomy:coin_copper"
+    }
+  ],
+  "result": {
+    "item": "calemieconomy:coin_silver",
+    "count": 1
+  }
+}

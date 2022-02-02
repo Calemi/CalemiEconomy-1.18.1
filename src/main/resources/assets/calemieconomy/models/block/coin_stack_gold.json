@@ -1,0 +1,7 @@
+{
+  "parent": "calemieconomy:block/coin_stack_base",
+  "textures": {
+    "0": "calemieconomy:models/coin_stack_gold",
+    "particle": "calemieconomy:models/coin_stack_gold"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "": [
+      {"model": "calemieconomy:block/coin_stack_copper"},
+      {"model": "calemieconomy:block/coin_stack_copper", "y": 90},
+      {"model": "calemieconomy:block/coin_stack_copper", "y": 180},
+      {"model": "calemieconomy:block/coin_stack_copper", "y": 270}
+    ]
+  }
+}

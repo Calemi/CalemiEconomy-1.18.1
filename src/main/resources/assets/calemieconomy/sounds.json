@@ -1,0 +1,44 @@
+{
+  "item.coin_sound": {
+    "category": "item",
+    "subtitle": "item.coin_sound.sub",
+    "sounds": [
+      {
+        "name": "calemieconomy:item/coin_1",
+        "stream": true
+      },
+      {
+        "name": "calemieconomy:item/coin_2",
+        "stream": true
+      },
+      {
+        "name": "calemieconomy:item/coin_3",
+        "stream": true
+      },
+      {
+        "name": "calemieconomy:item/coin_4",
+        "stream": true
+      }
+    ]
+  },
+  "item.money_bag_cheap_sound": {
+    "category": "item",
+    "subtitle": "item.money_bag_cheap_sound.sub",
+    "sounds": [
+      {
+        "name": "calemieconomy:item/money_bag_cheap_open",
+        "stream": true
+      }
+    ]
+  },
+  "item.money_bag_rich_sound": {
+    "category": "item",
+    "subtitle": "item.money_bag_rich_sound.sub",
+    "sounds": [
+      {
+        "name": "calemieconomy:item/money_bag_rich_open",
+        "stream": true
+      }
+    ]
+  }
+}

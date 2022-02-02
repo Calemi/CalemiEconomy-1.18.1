@@ -1,0 +1,102 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "downup": "false",
+        "northsouth": "false",
+        "eastwest": "false"
+      },
+      "apply": {
+        "model": "calemieconomy:block/currency_network_cable_core"
+      }
+    },
+    {
+      "when": {
+        "down": "true"
+      },
+      "apply": {
+        "model": "calemieconomy:block/currency_network_cable_connection",
+        "x": 270,
+        "uvlock": false
+      }
+    },
+    {
+      "when": {
+        "up": "true"
+      },
+      "apply": {
+        "model": "calemieconomy:block/currency_network_cable_connection",
+        "x": 90,
+        "uvlock": false
+      }
+    },
+    {
+      "when": {
+        "north": "true"
+      },
+      "apply": {
+        "model": "calemieconomy:block/currency_network_cable_connection",
+        "y": 180,
+        "uvlock": false
+      }
+    },
+    {
+      "when": {
+        "east": "true"
+      },
+      "apply": {
+        "model": "calemieconomy:block/currency_network_cable_connection",
+        "y": 270,
+        "uvlock": false
+      }
+    },
+    {
+      "when": {
+        "south": "true"
+      },
+      "apply": {
+        "model": "calemieconomy:block/currency_network_cable_connection",
+        "uvlock": false
+      }
+    },
+    {
+      "when": {
+        "west": "true"
+      },
+      "apply": {
+        "model": "calemieconomy:block/currency_network_cable_connection",
+        "y": 90,
+        "uvlock": false
+      }
+    },
+    {
+      "when": {
+        "downup": "true"
+      },
+      "apply": {
+        "model": "calemieconomy:block/currency_network_cable_tube",
+        "x": 270,
+        "uvlock": false
+      }
+    },
+    {
+      "when": {
+        "northsouth": "true"
+      },
+      "apply": {
+        "model": "calemieconomy:block/currency_network_cable_tube",
+        "uvlock": false
+      }
+    },
+    {
+      "when": {
+        "eastwest": "true"
+      },
+      "apply": {
+        "model": "calemieconomy:block/currency_network_cable_tube",
+        "y": 90,
+        "uvlock": false
+      }
+    }
+  ]
+}

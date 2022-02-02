@@ -28,7 +28,7 @@ public class BlockRaritaniumOre extends Block {
         super(BlockBehaviour.Properties.of(Material.STONE)
                 .color(color)
                 .sound(sound)
-                .strength(3)
+                .strength(3F, 3F)
                 .requiresCorrectToolForDrops());
     }
 
