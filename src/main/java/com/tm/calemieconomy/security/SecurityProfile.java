@@ -7,20 +7,20 @@ public class SecurityProfile {
 
     private String ownerName = "";
 
-    public String getOwnerName () {
+    public String getOwnerName() {
         return ownerName;
     }
 
-    public void setOwner (Player player) {
+    public void setOwner(Player player) {
         ownerName = player.getName().getString();
     }
 
-    public boolean hasOwner () {
-        return ownerName.isEmpty();
+    public boolean hasOwner() {
+        return !ownerName.isEmpty();
     }
 
-    public boolean isOwner (String ownerName) {
-        return this.ownerName.equalsIgnoreCase(ownerName);
+    public boolean isOwner(Player player) {
+        return !hasOwner() || ownerName.equalsIgnoreCase(player.getName().getString());
     }
 
     public void loadFromNBT(CompoundTag tag) {

@@ -1,13 +1,17 @@
 package com.tm.calemieconomy.blockentity;
 
+import com.tm.calemicore.util.Location;
 import com.tm.calemieconomy.api.ICurrencyHolder;
+import com.tm.calemieconomy.block.BlockCurrencyNetworkGate;
 import com.tm.calemieconomy.config.CEConfig;
 import com.tm.calemieconomy.init.InitBlockEntityTypes;
+import com.tm.calemieconomy.init.InitItems;
 import com.tm.calemieconomy.item.ItemCoin;
 import com.tm.calemieconomy.menu.MenuBank;
 import com.tm.calemieconomy.security.ISecurityHolder;
 import com.tm.calemieconomy.security.SecurityProfile;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.Inventory;
@@ -20,7 +24,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
-public class BlockEntityBank extends BlockEntityContainerBase implements ICurrencyHolder, ISecurityHolder {
+public class BlockEntityBank extends BlockEntityContainerBase implements ICurrencyNetwork, ICurrencyHolder, ISecurityHolder {
 
     private int currency;
     private final SecurityProfile profile = new SecurityProfile();
@@ -61,6 +65,11 @@ public class BlockEntityBank extends BlockEntityContainerBase implements ICurren
                 }
             }
         }
+    }
+
+    @Override
+    public Direction[] getConnectedDirections() {
+        return Direction.values();
     }
 
     @Override

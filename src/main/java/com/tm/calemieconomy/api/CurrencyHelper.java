@@ -21,7 +21,14 @@ public class CurrencyHelper {
     }
 
     public static void addCurrencyLore(List<Component> tooltip, int currentCurrency, int maxCurrency) {
-        tooltip.add(new TranslatableComponent("lore.currency").withStyle(ChatFormatting.GRAY).append(formatCurrency(currentCurrency) + (maxCurrency != 0 ? (" / " + formatCurrency(maxCurrency)) : "")));
+
+        MutableComponent amount = formatCurrency(currentCurrency);
+
+        if (maxCurrency > 0) {
+            amount.append(" / ").append(formatCurrency(maxCurrency));
+        }
+
+        tooltip.add(new TranslatableComponent("lore.currency").withStyle(ChatFormatting.GRAY).append(" ").append(amount.withStyle(ChatFormatting.GOLD)));
     }
 
     public static int loadFromNBT(CompoundTag tag) {

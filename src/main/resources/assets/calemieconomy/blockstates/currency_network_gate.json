@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "connected=true": { "model": "calemieconomy:block/currency_network_gate_connected" },
+    "connected=false": { "model": "calemieconomy:block/currency_network_gate_disabled"}
+  }
+}

@@ -1,7 +1,9 @@
 package com.tm.calemieconomy.block;
 
+import com.tm.calemicore.util.Location;
 import com.tm.calemicore.util.helper.ItemHelper;
 import com.tm.calemieconomy.blockentity.BlockEntityContainerBase;
+import com.tm.calemieconomy.util.helper.SecurityHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -23,12 +25,20 @@ public abstract class BlockContainerBase extends BaseEntityBlock {
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 
-        if (level.getBlockEntity(pos) instanceof BlockEntityContainerBase blockEntity) {
+        Location location = new Location(level, pos);
 
-            if (!level.isClientSide()) {
-                player.openMenu(blockEntity);
+        if (location.getBlockEntity() instanceof BlockEntityContainerBase blockEntity) {
+
+            if (SecurityHelper.canEditSecuredBlock(location, player)) {
+
+                if (!level.isClientSide()) {
+                    player.openMenu(blockEntity);
+                }
+
                 return InteractionResult.SUCCESS;
             }
+
+            else if (hand == InteractionHand.MAIN_HAND && !level.isClientSide()) SecurityHelper.printErrorMessage(location, player);
         }
 
         return InteractionResult.FAIL;

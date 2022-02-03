@@ -1,9 +1,7 @@
 package com.tm.calemieconomy.event;
 
 import com.tm.calemicore.util.Location;
-import com.tm.calemicore.util.helper.LogHelper;
 import com.tm.calemieconomy.blockentity.BlockEntityBase;
-import com.tm.calemieconomy.main.CEReference;
 import com.tm.calemieconomy.security.ISecurityHolder;
 import com.tm.calemieconomy.util.helper.SecurityHelper;
 import net.minecraft.core.BlockPos;
@@ -28,7 +26,6 @@ public class SecurityEvents {
 
         //Checks if the Entity is a Player and the Location is a TileEntityBase and implements ISecurity.
         if (event.getEntity() instanceof Player player && blockEntity instanceof BlockEntityBase blockEntityBase && blockEntity instanceof ISecurityHolder securityHolder) {
-            LogHelper.log(CEReference.MOD_NAME, "SET SECURITY: " + player.getName().getString());
             securityHolder.getSecurityProfile().setOwner(player);
             blockEntityBase.markUpdated();
         }
@@ -42,8 +39,9 @@ public class SecurityEvents {
 
         Location location = new Location(event.getPlayer().getLevel(), event.getPos());
 
-        if (!SecurityHelper.canUseSecuredBlock(location, event.getPlayer(), true)) {
+        if (!SecurityHelper.canEditSecuredBlock(location, event.getPlayer())) {
             event.setCanceled(true);
+            SecurityHelper.printErrorMessage(location, event.getPlayer());
         }
     }
 

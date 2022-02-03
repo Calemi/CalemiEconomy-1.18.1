@@ -6,7 +6,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -34,18 +33,18 @@ public class BlockCurrencyNetworkCable extends BlockCurrencyNetworkCableOpaque {
     private static final BooleanProperty EASTWEST = BooleanProperty.create("eastwest");
 
     private static final VoxelShape CORE_AABB = Block.box(5, 5, 5, 11, 11, 11);
-    private static final VoxelShape DOWN_AABB = Block.box(5, 0, 5, 11, 11, 11);
-    private static final VoxelShape UP_AABB = Block.box(5, 5, 5, 11, 16, 11);
-    private static final VoxelShape NORTH_AABB = Block.box(5, 5, 0, 11, 11, 5);
-    private static final VoxelShape EAST_AABB = Block.box(5, 5, 5, 16, 11, 11);
-    private static final VoxelShape SOUTH_AABB = Block.box(5, 5, 5, 11, 11, 16);
-    private static final VoxelShape WEST_AABB = Block.box(0, 5, 5, 11, 11, 11);
-    private static final VoxelShape DOWNUP_AABB = Block.box(5, 0, 5, 11, 16, 11);
-    private static final VoxelShape NORTHSOUTH_AABB = Block.box(5, 5, 0, 11, 11, 16);
-    private static final VoxelShape EASTWEST_AABB = Block.box(0, 5, 5, 16, 11, 11);
+    private static final VoxelShape DOWN_AABB = Block.box(6, 0, 6, 10, 10, 10);
+    private static final VoxelShape UP_AABB = Block.box(6, 6, 6, 10, 16, 10);
+    private static final VoxelShape NORTH_AABB = Block.box(6, 6, 0, 10, 10, 5);
+    private static final VoxelShape EAST_AABB = Block.box(6, 6, 6, 16, 10, 10);
+    private static final VoxelShape SOUTH_AABB = Block.box(6, 6, 6, 10, 10, 16);
+    private static final VoxelShape WEST_AABB = Block.box(0, 6, 6, 10, 10, 10);
+    private static final VoxelShape DOWNUP_AABB = Block.box(6, 0, 6, 10, 16, 11);
+    private static final VoxelShape NORTHSOUTH_AABB = Block.box(6, 6, 0, 10, 10, 16);
+    private static final VoxelShape EASTWEST_AABB = Block.box(0, 6, 6, 16, 10, 10);
 
     public BlockCurrencyNetworkCable() {
-        super(Block.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2).noOcclusion());
+        super(Block.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2));
 
         registerDefaultState(getStateDefinition().any()
                 .setValue(UP, false)
@@ -159,14 +158,20 @@ public class BlockCurrencyNetworkCable extends BlockCurrencyNetworkCableOpaque {
         if (state.getValue(NORTHSOUTH)) collidingBoxes.add(NORTHSOUTH_AABB);
         if (state.getValue(EASTWEST)) collidingBoxes.add(EASTWEST_AABB);
 
+        if (!state.getValue(DOWNUP) && !state.getValue(NORTHSOUTH) && !state.getValue(EASTWEST)) collidingBoxes.add(CORE_AABB);
+
         VoxelShape[] shapes = new VoxelShape[collidingBoxes.size()];
 
         for (int i = 0; i < shapes.length; i++) {
             shapes[i] = collidingBoxes.get(i);
         }
 
-        return Shapes.or(CORE_AABB, shapes);
+        return Shapes.or(Block.box(0, 0, 0, 0, 0, 0), shapes);
     }
+
+    /*
+        Methods for Blocks that are not full and solid cubes.
+    */
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
@@ -182,4 +187,6 @@ public class BlockCurrencyNetworkCable extends BlockCurrencyNetworkCableOpaque {
     public boolean propagatesSkylightDown(BlockState pState, BlockGetter pLevel, BlockPos pPos) {
         return true;
     }
+
+
 }

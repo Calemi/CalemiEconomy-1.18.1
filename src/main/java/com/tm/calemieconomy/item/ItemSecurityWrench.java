@@ -3,7 +3,6 @@ package com.tm.calemieconomy.item;
 import com.tm.calemicore.util.Location;
 import com.tm.calemicore.util.helper.LoreHelper;
 import com.tm.calemieconomy.blockentity.BlockEntityBase;
-import com.tm.calemieconomy.config.CEConfig;
 import com.tm.calemieconomy.event.WrenchEvents;
 import com.tm.calemieconomy.main.CalemiEconomy;
 import com.tm.calemieconomy.security.ISecurityHolder;
@@ -17,6 +16,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+
 import java.util.List;
 
 public class ItemSecurityWrench extends Item {
@@ -46,23 +46,16 @@ public class ItemSecurityWrench extends Item {
         if (player != null && player.isCrouching()) {
 
             //Checks if the Tile Entity exists and if its a the mod's Tile Entity
-            if (location.getBlockEntity() != null && location.getBlockEntity() instanceof BlockEntityBase) {
+            if (location.getBlockEntity() != null && location.getBlockEntity() instanceof ISecurityHolder) {
 
-                //Checks if the Tile Entity has security
-                if (location.getBlockEntity() instanceof ISecurityHolder securityHolder) {
+                //Checks if the Player is the owner of the secured block. Bypassed by creative mode or config option.
+                if (SecurityHelper.canEditSecuredBlock(location, player)) {
 
-                    //Checks if the Player is the owner of the secured block. Bypassed by creative mode or config option.
-                    if (securityHolder.getSecurityProfile().isOwner(player.getName().getString()) || player.isCreative() || !CEConfig.security.useSecurity.get()) {
-
-                        WrenchEvents.onBlockWrenched(location);
-                        return InteractionResult.SUCCESS;
-                    }
-
-                    else SecurityHelper.printErrorMessage(location, player);
+                    WrenchEvents.onBlockWrenched(location);
+                    return InteractionResult.SUCCESS;
                 }
 
-                //If the Tile Entity has no security, call the event.
-                else WrenchEvents.onBlockWrenched(location);
+                else if (!location.level.isClientSide()) SecurityHelper.printErrorMessage(location, player);
             }
         }
 

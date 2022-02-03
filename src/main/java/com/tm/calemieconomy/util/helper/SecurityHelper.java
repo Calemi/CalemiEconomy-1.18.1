@@ -9,19 +9,14 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 
 public class SecurityHelper {
 
-    public static boolean canUseSecuredBlock(Location location, Player player, boolean printError) {
+    public static final UnitMessenger SECURITY = new UnitMessenger("security");
+
+    public static boolean canEditSecuredBlock(Location location, Player player) {
 
         BlockEntity blockEntity = location.getBlockEntity();
 
         if (blockEntity instanceof ISecurityHolder securityHolder) {
-
-            if (securityHolder.getSecurityProfile().isOwner(player.getName().getString()) || player.isCreative() || !CEConfig.security.useSecurity.get()) {
-                return true;
-            }
-
-            else if (printError) printErrorMessage(location, player);
-
-            return false;
+            return securityHolder.getSecurityProfile().isOwner(player) || player.isCreative() || !CEConfig.security.useSecurity.get();
         }
 
         return true;
@@ -29,9 +24,10 @@ public class SecurityHelper {
 
     public static void printErrorMessage (Location location, Player player) {
 
-        if (player.getLevel().isClientSide()) {
-            UnitMessenger message = new UnitMessenger("security");
-            message.sendErrorMessage(message.getMessage("error.notyours"), player);
+        BlockEntity blockEntity = location.getBlockEntity();
+
+        if (blockEntity instanceof ISecurityHolder securityHolder) {
+            SECURITY.sendErrorMessage(SECURITY.getMessage("error.notyours").append(" ").append(securityHolder.getSecurityProfile().getOwnerName()), player);
         }
     }
 }

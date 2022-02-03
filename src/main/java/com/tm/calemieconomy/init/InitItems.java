@@ -47,7 +47,10 @@ public class InitItems {
 
     public static final RegistryObject<Block> CURRENCY_NETWORK_CABLE =        regBlock("currency_network_cable", CalemiEconomy.TAB, BlockCurrencyNetworkCable::new);
     public static final RegistryObject<Block> CURRENCY_NETWORK_CABLE_OPAQUE = regBlock("currency_network_cable_opaque", CalemiEconomy.TAB, BlockCurrencyNetworkCableOpaque::new);
+    public static final RegistryObject<Block> CURRENCY_NETWORK_GATE =         regBlock("currency_network_gate", CalemiEconomy.TAB, BlockCurrencyNetworkGate::new);
+
     public static final RegistryObject<Block> BANK =                          regBlock("bank", CalemiEconomy.TAB, BlockBank::new);
+    public static final RegistryObject<Block> TRADING_POST =                  regBlock("trading_post", CalemiEconomy.TAB, BlockTradingPost::new);
 
     //----- ITEMS ------\\
 

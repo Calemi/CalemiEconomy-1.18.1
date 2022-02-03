@@ -18,7 +18,7 @@ public class MenuBank extends MenuBase implements ICurrencyHolder {
     private final ContainerLevelAccess access;
 
     public MenuBank(int containerID, Inventory playerInv) {
-        this(containerID, playerInv, new SimpleContainer(2), new SimpleContainerData(2), ContainerLevelAccess.NULL);
+        this(containerID, playerInv, new SimpleContainer(27), new SimpleContainerData(2), ContainerLevelAccess.NULL);
     }
 
     public MenuBank(int containerID, Inventory playerInv, Container container, ContainerData data, ContainerLevelAccess access) {

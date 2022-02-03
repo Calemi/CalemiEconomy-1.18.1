@@ -11,6 +11,7 @@ import com.tm.calemieconomy.init.InitMenuTypes;
 import com.tm.calemieconomy.init.InitSounds;
 import com.tm.calemieconomy.packet.CEPacketHandler;
 import com.tm.calemieconomy.screen.ScreenBank;
+import com.tm.calemieconomy.screen.ScreenTradingPost;
 import com.tm.calemieconomy.tab.CETab;
 import com.tm.calemieconomy.world.RaritaniumOreGeneration;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -71,5 +72,6 @@ public class CalemiEconomy {
         MinecraftForge.EVENT_BUS.register(new WrenchLoreEvent());
 
         MenuScreens.register(InitMenuTypes.BANK.get(), ScreenBank::new);
+        MenuScreens.register(InitMenuTypes.TRADING_POST.get(), ScreenTradingPost::new);
     }
 }

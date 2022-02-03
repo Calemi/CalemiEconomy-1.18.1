@@ -32,8 +32,11 @@ public abstract class BlockEntityBase extends BlockEntity {
      * Call this method to send server NBT data to the client.
      */
     public void markUpdated() {
-        setChanged();
-        getLevel().sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
+
+        if (getLevel() != null ) {
+            setChanged();
+            getLevel().sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
+        }
     }
 
     /**

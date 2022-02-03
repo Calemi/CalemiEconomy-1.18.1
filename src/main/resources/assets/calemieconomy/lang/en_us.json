@@ -27,12 +27,20 @@
   "block.calemieconomy.bank": "Bank",
   "ce.lore.bank": "Collects RC from all connected Trading Posts.",
   "ce.lore.bank.use": "Open Inventory",
+  "block.calemieconomy.currency_network_gate": "Currency Network Gate",
+  "ce.lore.currency_network_gate": "Used to enable and disable networks branches by redstone signal.",
+  "block.calemieconomy.trading_post": "Trading Post",
+  "ce.lore.trading_post": "Used to buy and sell Items.",
+  "ce.lore.trading_post.use": "Buy or Sell Item",
+  "ce.lore.trading_post.use-wrench": "(Security Wrench) Open Inventory",
+  "ce.lore.trading_post.sneak-use": "Show Trade Info",
 
 
 
 
 
   "container.bank": "Bank",
+  "container.trading_post": "Trading Post",
   "screen.bank.btn.withdraw": "Withdraw",
   "screen.bank.btn.deposit": "Deposit",
 
@@ -51,7 +59,7 @@
 
 
   "unit.security.name": "Security",
-  "unit.security.msg.error.notyours": "This unit does not belong to you!",
+  "unit.security.msg.error.notyours": "You cannot edit this block! It belongs to",
 
 
 
