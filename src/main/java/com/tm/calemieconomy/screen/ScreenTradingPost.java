@@ -2,9 +2,9 @@ package com.tm.calemieconomy.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.tm.calemieconomy.blockentity.BlockEntityTradingPost;
 import com.tm.calemieconomy.main.CEReference;
 import com.tm.calemieconomy.menu.MenuTradingPost;
-import com.tm.calemieconomy.util.helper.ScreenTabs;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
@@ -18,8 +18,11 @@ public class ScreenTradingPost extends AbstractContainerScreen<MenuTradingPost> 
 
     private static final ResourceLocation TEXTURE = new ResourceLocation(CEReference.MOD_ID, "textures/gui/trading_post.png");
 
+    private final BlockEntityTradingPost post;
+
     public ScreenTradingPost(MenuTradingPost menu, Inventory playerInv, Component title) {
         super(menu, playerInv, title);
+        this.post = (BlockEntityTradingPost) getMenu().getBlockEntity();
     }
 
     private int getScreenX() {

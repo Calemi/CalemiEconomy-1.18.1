@@ -2,6 +2,7 @@ package com.tm.calemieconomy.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.tm.calemieconomy.blockentity.BlockEntityBank;
 import com.tm.calemieconomy.main.CEReference;
 import com.tm.calemieconomy.menu.MenuBank;
 import com.tm.calemieconomy.packet.CEPacketHandler;
@@ -20,8 +21,11 @@ public class ScreenBank extends AbstractContainerScreen<MenuBank> {
 
     private static final ResourceLocation TEXTURE = new ResourceLocation(CEReference.MOD_ID, "textures/gui/bank.png");
 
+    private final BlockEntityBank bank;
+
     public ScreenBank(MenuBank menu, Inventory playerInv, Component title) {
         super(menu, playerInv, title);
+        this.bank = (BlockEntityBank) getMenu().getBlockEntity();
     }
 
     private int getScreenX() {
@@ -46,8 +50,8 @@ public class ScreenBank extends AbstractContainerScreen<MenuBank> {
      * Handles withdrawals from the Bank.
      */
     private void withdraw () {
-        getMenu().withdrawCurrency(50);
-        CEPacketHandler.INSTANCE.sendToServer(new PacketSyncContainerCurrency(getMenu().getCurrency()));
+        bank.withdrawCurrency(50);
+        CEPacketHandler.INSTANCE.sendToServer(new PacketSyncContainerCurrency(bank.getCurrency()));
     }
 
     /**
@@ -55,8 +59,8 @@ public class ScreenBank extends AbstractContainerScreen<MenuBank> {
      * Handles deposits from the Bank.
      */
     private void deposit () {
-        getMenu().depositCurrency(50);
-        CEPacketHandler.INSTANCE.sendToServer(new PacketSyncContainerCurrency(getMenu().getCurrency()));
+        bank.depositCurrency(50);
+        CEPacketHandler.INSTANCE.sendToServer(new PacketSyncContainerCurrency(bank.getCurrency()));
     }
 
     @Override
@@ -73,6 +77,6 @@ public class ScreenBank extends AbstractContainerScreen<MenuBank> {
         RenderSystem.setShaderTexture(0, TEXTURE);
         blit(poseStack, getScreenX(), getScreenY(), 0, 0, imageWidth, imageHeight);
 
-        ScreenTabs.addCurrencyTab(poseStack, getScreenX(), getScreenY() + 5, mouseX, mouseY, getMenu());
+        ScreenTabs.addCurrencyTab(poseStack, getScreenX(), getScreenY() + 5, mouseX, mouseY, bank);
     }
 }

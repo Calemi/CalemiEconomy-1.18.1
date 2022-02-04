@@ -1,6 +1,7 @@
 package com.tm.calemieconomy.packet;
 
 import com.tm.calemieconomy.api.ICurrencyHolder;
+import com.tm.calemieconomy.menu.MenuBase;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
@@ -37,9 +38,12 @@ public class PacketSyncContainerCurrency {
 
             if (player != null) {
 
-                if (player.containerMenu != null && player.containerMenu instanceof ICurrencyHolder currencyHolder) {
-                    currencyHolder.setCurrency(currency);
-                    player.containerMenu.broadcastChanges();
+                if (player.containerMenu != null && player.containerMenu instanceof MenuBase menu) {
+
+                    if (menu.getBlockEntity() instanceof ICurrencyHolder currencyHolder) {
+                        currencyHolder.setCurrency(currency);
+                        player.containerMenu.broadcastChanges();
+                    }
                 }
             }
         });

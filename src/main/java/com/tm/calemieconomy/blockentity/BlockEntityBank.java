@@ -1,11 +1,8 @@
 package com.tm.calemieconomy.blockentity;
 
-import com.tm.calemicore.util.Location;
 import com.tm.calemieconomy.api.ICurrencyHolder;
-import com.tm.calemieconomy.block.BlockCurrencyNetworkGate;
 import com.tm.calemieconomy.config.CEConfig;
 import com.tm.calemieconomy.init.InitBlockEntityTypes;
-import com.tm.calemieconomy.init.InitItems;
 import com.tm.calemieconomy.item.ItemCoin;
 import com.tm.calemieconomy.menu.MenuBank;
 import com.tm.calemieconomy.security.ISecurityHolder;
@@ -17,17 +14,15 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
-public class BlockEntityBank extends BlockEntityContainerBase implements ICurrencyNetwork, ICurrencyHolder, ISecurityHolder {
+public class BlockEntityBank extends BlockEntityContainerBase implements ISecurityHolder, ICurrencyHolder, ICurrencyNetwork {
 
-    private int currency;
     private final SecurityProfile profile = new SecurityProfile();
+    private int currency;
 
     public BlockEntityBank(BlockPos pos, BlockState state) {
         super(InitBlockEntityTypes.BANK.get(), pos, state);
@@ -67,24 +62,32 @@ public class BlockEntityBank extends BlockEntityContainerBase implements ICurren
         }
     }
 
+    /**
+     * Security Methods
+     */
+
     @Override
-    public Direction[] getConnectedDirections() {
-        return Direction.values();
+    public SecurityProfile getSecurityProfile () {
+        return profile;
     }
+
+    /**
+     * Currency Methods
+     */
 
     @Override
     public int getCurrency() {
-        return data.get(0);
+        return currency;
     }
 
     @Override
     public int getCurrencyCapacity() {
-        return data.get(1);
+        return CEConfig.economy.bankCurrencyCapacity.get();
     }
 
     @Override
     public void setCurrency(int amount) {
-        data.set(0, amount);
+        currency = amount;
         markUpdated();
     }
 
@@ -102,7 +105,7 @@ public class BlockEntityBank extends BlockEntityContainerBase implements ICurren
     public void depositCurrency(int amount) {
 
         if (canDepositCurrency(amount)) {
-            data.set(0, getCurrency() + amount);
+            setCurrency(getCurrency() + amount);
         }
 
         markUpdated();
@@ -112,42 +115,24 @@ public class BlockEntityBank extends BlockEntityContainerBase implements ICurren
     public void withdrawCurrency(int amount) {
 
         if (canWithdrawCurrency(amount)) {
-            data.set(0, getCurrency() - amount);
+            setCurrency(getCurrency() - amount);
         }
 
         markUpdated();
     }
 
-    private final ContainerData data = new ContainerData() {
-
-        @Override
-        public int get(int id) {
-
-            return switch (id) {
-                case 0 -> currency;
-                case 1 -> CEConfig.economy.bankCurrencyCapacity.get();
-                default -> 0;
-            };
-        }
-
-        @Override
-        public void set(int id, int data) {
-
-            if (id == 0) {
-               currency = data;
-            }
-        }
-
-        @Override
-        public int getCount() {
-            return 2;
-        }
-    };
+    /**
+     * Network Methods
+     */
 
     @Override
-    public SecurityProfile getSecurityProfile () {
-        return profile;
+    public Direction[] getConnectedDirections() {
+        return Direction.values();
     }
+
+    /**
+     * Container Methods
+     */
 
     @Override
     protected Component getDefaultName() {
@@ -162,6 +147,6 @@ public class BlockEntityBank extends BlockEntityContainerBase implements ICurren
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int containerID, Inventory playerInv, Player player) {
-        return new MenuBank(containerID, playerInv, this, data, ContainerLevelAccess.create(this.level, this.getBlockPos()));
+        return new MenuBank(containerID, playerInv, this);
     }
 }

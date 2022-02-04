@@ -1,7 +1,6 @@
 package com.tm.calemieconomy.menu;
 
 import com.tm.calemieconomy.blockentity.BlockEntityContainerBase;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -12,10 +11,15 @@ import org.jetbrains.annotations.Nullable;
 
 public abstract class MenuBase extends AbstractContainerMenu {
 
-    public Container container;
+    private final BlockEntityContainerBase blockEntity;
 
-    protected MenuBase(@Nullable MenuType<?> menuType, int containerID) {
+    protected MenuBase(@Nullable MenuType<?> menuType, int containerID, BlockEntityContainerBase blockEntity) {
         super(menuType, containerID);
+        this.blockEntity = blockEntity;
+    }
+
+    public BlockEntityContainerBase getBlockEntity() {
+        return blockEntity;
     }
 
     public void addPlayerInventory(Inventory playerInv, int yOffset) {
@@ -34,7 +38,7 @@ public abstract class MenuBase extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
-        return container.stillValid(player);
+        return true;
     }
 
     /**
@@ -44,7 +48,7 @@ public abstract class MenuBase extends AbstractContainerMenu {
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
 
-        int containerSize = container.getContainerSize();
+        int containerSize = blockEntity.getContainerSize();
 
         ItemStack clickedStackCopy = ItemStack.EMPTY;
         Slot slot = slots.get(index);
@@ -78,14 +82,5 @@ public abstract class MenuBase extends AbstractContainerMenu {
         }
 
         return clickedStackCopy;
-    }
-
-    /**
-     * Called when the container is closed.
-     */
-    @Override
-    public void removed(Player player) {
-        super.removed(player);
-        container.stopOpen(player);
     }
 }

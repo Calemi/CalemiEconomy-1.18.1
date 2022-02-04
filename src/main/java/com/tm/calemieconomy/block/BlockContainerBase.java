@@ -5,6 +5,7 @@ import com.tm.calemicore.util.helper.ItemHelper;
 import com.tm.calemieconomy.blockentity.BlockEntityContainerBase;
 import com.tm.calemieconomy.util.helper.SecurityHelper;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -15,6 +16,7 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.network.NetworkHooks;
 
 public abstract class BlockContainerBase extends BaseEntityBlock {
 
@@ -32,7 +34,7 @@ public abstract class BlockContainerBase extends BaseEntityBlock {
             if (SecurityHelper.canEditSecuredBlock(location, player)) {
 
                 if (!level.isClientSide()) {
-                    player.openMenu(blockEntity);
+                    NetworkHooks.openGui((ServerPlayer) player, blockEntity, pos);
                 }
 
                 return InteractionResult.SUCCESS;
