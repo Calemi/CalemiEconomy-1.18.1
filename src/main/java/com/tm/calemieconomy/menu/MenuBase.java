@@ -38,7 +38,7 @@ public abstract class MenuBase extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
-        return true;
+        return getBlockEntity().stillValid(player);
     }
 
     /**
@@ -48,7 +48,7 @@ public abstract class MenuBase extends AbstractContainerMenu {
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
 
-        int containerSize = blockEntity.getContainerSize();
+        int containerSize = getBlockEntity().getContainerSize();
 
         ItemStack clickedStackCopy = ItemStack.EMPTY;
         Slot slot = slots.get(index);
