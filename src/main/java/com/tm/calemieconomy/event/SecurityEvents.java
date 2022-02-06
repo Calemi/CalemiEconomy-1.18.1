@@ -1,7 +1,8 @@
 package com.tm.calemieconomy.event;
 
 import com.tm.calemicore.util.Location;
-import com.tm.calemieconomy.blockentity.BlockEntityBase;
+import com.tm.calemicore.util.blockentity.BlockEntityBase;
+import com.tm.calemieconomy.blockentity.BlockEntityTradingPost;
 import com.tm.calemieconomy.security.ISecurityHolder;
 import com.tm.calemieconomy.util.helper.SecurityHelper;
 import net.minecraft.core.BlockPos;
@@ -39,9 +40,20 @@ public class SecurityEvents {
 
         Location location = new Location(event.getPlayer().getLevel(), event.getPos());
 
-        if (!SecurityHelper.canEditSecuredBlock(location, event.getPlayer())) {
-            event.setCanceled(true);
-            SecurityHelper.printErrorMessage(location, event.getPlayer());
+        if (!event.getPlayer().isCreative()) {
+
+            if (!SecurityHelper.canEditSecuredBlock(location, event.getPlayer())) {
+
+                event.setCanceled(true);
+                SecurityHelper.printErrorMessage(location, event.getPlayer());
+            }
+
+            else if (location.getBlockEntity() instanceof BlockEntityTradingPost post) {
+
+                if (post.adminMode) {
+                    event.setCanceled(true);
+                }
+            }
         }
     }
 

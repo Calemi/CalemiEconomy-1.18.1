@@ -8,6 +8,9 @@
   "item.calemieconomy.money_bag_rich": "Rich Money Bag",
   "ce.lore.money_bag": "Contains an unknown assortment of Coins.",
   "ce.lore.money_bag.use": "Open Bag",
+  "item.calemieconomy.wallet": "Wallet",
+  "ce.lore.wallet": "Used to store currency in one place.",
+  "ce.lore.wallet.use": "Open Inventory",
 
 
 
@@ -39,10 +42,27 @@
 
 
 
+  "screen.tab.info.1": "Button Click Info",
+  "screen.tab.info.2": "Shift: 10, Ctrl: 100, Shift + Ctrl: 1,000",
   "container.bank": "Bank",
-  "container.trading_post": "Trading Post",
   "screen.bank.btn.withdraw": "Withdraw",
   "screen.bank.btn.deposit": "Deposit",
+  "screen.bank.error.1": "Inactive!",
+  "screen.bank.error.2": "Another Bank is connected in the network!",
+  "container.trading_post": "Trading Post",
+  "screen.trading_post.txt.amount": "Amount",
+  "screen.trading_post.txt.price": "Price",
+  "screen.trading_post.btn.selling": "Selling",
+  "screen.trading_post.btn.buying": "Buying",
+  "screen.trading_post.btn.broadcast": "Broadcast",
+  "ce.msg.trading_post.broadcast.admin": "The Server",
+  "ce.msg.trading_post.broadcast.is": "is",
+  "ce.msg.trading_post.broadcast.selling": "selling",
+  "ce.msg.trading_post.broadcast.buying": "buying",
+  "ce.msg.trading_post.broadcast.free": "free",
+  "ce.msg.trading_post.broadcast.for": "for",
+  "ce.msg.trading_post.broadcast.at": "at",
+  "container.wallet": "Wallet",
 
 
 
@@ -60,6 +80,21 @@
 
   "unit.security.name": "Security",
   "unit.security.msg.error.notyours": "You cannot edit this block! It belongs to",
+  "unit.trading_post.name": "Trading Post",
+  "unit.trading_post.msg.hold-wallet": "Hold a wallet in your inventory to make a purchase.",
+  "unit.trading_post.msg.admin-mode": "Admin Mode is enabled for this Block. Sneak place this Block to disable it.",
+  "unit.trading_post.msg.error.wait": "You must wait %s second(s) before broadcasting again!",
+  "unit.trading_post.msg.error.invalid": "Trade is not set up properly!",
+  "unit.trading_post.msg.error.admin": "Admin Posts can only be opened in creative mode!",
+  "unit.trading_post.msg.error.no-bank": "There is no active connected Bank!",
+  "unit.trading_post.msg.error.bank-empty": "The connected Bank does not have enough money!",
+  "unit.trading_post.msg.error.bank-full": "The connected Bank is too full of money!",
+  "unit.trading_post.msg.error.wallet-empty": "Your Wallet does not have enough money!",
+  "unit.trading_post.msg.error.wallet-full": "Your Wallet is full too of money!",
+  "unit.trading_post.msg.error.stock-full": "The Trading Post is too full of stock!",
+  "unit.trading_post.msg.error.stock-empty": "The Trading Post does not have enough stock!",
+  "unit.trading_post.msg.error.no-items": "You do not have the required item(s) the Trading Post is looking for!",
+  "unit.wallet.name": "Wallet",
 
 
 

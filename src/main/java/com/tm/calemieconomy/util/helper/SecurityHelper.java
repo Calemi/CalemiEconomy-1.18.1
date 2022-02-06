@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 
 public class SecurityHelper {
 
-    public static final UnitMessenger SECURITY = new UnitMessenger("security");
+    public static final UnitMessenger MESSENGER = new UnitMessenger("security");
 
     public static boolean canEditSecuredBlock(Location location, Player player) {
 
@@ -27,7 +27,7 @@ public class SecurityHelper {
         BlockEntity blockEntity = location.getBlockEntity();
 
         if (blockEntity instanceof ISecurityHolder securityHolder) {
-            SECURITY.sendErrorMessage(SECURITY.getMessage("error.notyours").append(" ").append(securityHolder.getSecurityProfile().getOwnerName()), player);
+            MESSENGER.sendErrorMessage(MESSENGER.getMessage("error.notyours").append(" ").append(securityHolder.getSecurityProfile().getOwnerName()), player);
         }
     }
 }

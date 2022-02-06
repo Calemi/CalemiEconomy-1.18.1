@@ -1,6 +1,6 @@
 package com.tm.calemieconomy.item;
 
-import com.tm.calemieconomy.api.CurrencyHelper;
+import com.tm.calemieconomy.util.helper.CurrencyHelper;
 import com.tm.calemieconomy.block.base.BlockItemBase;
 import com.tm.calemieconomy.main.CalemiEconomy;
 import net.minecraft.ChatFormatting;

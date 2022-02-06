@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " I ",
+    " CI",
+    "S  "
+  ],
+  "key": {
+    "S": {
+      "tag": "forge:rods/wooden"
+    },
+    "I": {
+      "item" : "minecraft:iron_ingot"
+    },
+    "C": {
+      "item": "calemieconomy:coin_copper"
+    }
+  },
+  "result": {
+    "item": "calemieconomy:security_wrench",
+    "count": 1
+  }
+}

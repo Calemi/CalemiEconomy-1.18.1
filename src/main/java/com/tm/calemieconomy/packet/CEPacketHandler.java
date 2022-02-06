@@ -16,7 +16,9 @@ public class CEPacketHandler {
 
     public static void init() {
         int id = 0;
-        CEPacketHandler.INSTANCE.registerMessage(++id, PacketSyncContainerCurrency.class, PacketSyncContainerCurrency::toBytes, PacketSyncContainerCurrency::new, PacketSyncContainerCurrency::handle);
-
+        CEPacketHandler.INSTANCE.registerMessage(++id, PacketBank.class, PacketBank::toBytes, PacketBank::new, PacketBank::handle);
+        CEPacketHandler.INSTANCE.registerMessage(++id, PacketTradingPost.class, PacketTradingPost::toBytes, PacketTradingPost::new, PacketTradingPost::handle);
+        CEPacketHandler.INSTANCE.registerMessage(++id, PacketExtractWalletCurrency.class, PacketExtractWalletCurrency::toBytes, PacketExtractWalletCurrency::new, PacketExtractWalletCurrency::handle);
+        CEPacketHandler.INSTANCE.registerMessage(++id, PacketOpenWallet.class, PacketOpenWallet::toBytes, PacketOpenWallet::new, PacketOpenWallet::handle);
     }
 }

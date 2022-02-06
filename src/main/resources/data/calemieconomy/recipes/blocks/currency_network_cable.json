@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GGG",
+    "RCR",
+    "GGG"
+  ],
+  "key": {
+    "C": {
+      "item": "calemieconomy:coin_copper"
+    },
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "result": {
+    "item": "calemieconomy:currency_network_cable",
+    "count": 16
+  }
+}

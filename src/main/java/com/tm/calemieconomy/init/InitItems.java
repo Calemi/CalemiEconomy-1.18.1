@@ -5,6 +5,7 @@ import com.tm.calemieconomy.block.base.BlockItemBase;
 import com.tm.calemieconomy.item.ItemCoin;
 import com.tm.calemieconomy.item.ItemMoneyBag;
 import com.tm.calemieconomy.item.ItemSecurityWrench;
+import com.tm.calemieconomy.item.ItemWallet;
 import com.tm.calemieconomy.main.CEReference;
 import com.tm.calemieconomy.main.CalemiEconomy;
 import net.minecraft.world.item.CreativeModeTab;
@@ -62,6 +63,8 @@ public class InitItems {
 
     public static final RegistryObject<Item> MONEY_BAG_CHEAP = regItem("money_bag_cheap", () -> new ItemMoneyBag(false));
     public static final RegistryObject<Item> MONEY_BAG_RICH =  regItem("money_bag_rich", () -> new ItemMoneyBag(true));
+
+    public static final RegistryObject<Item> WALLET = ITEMS.register("wallet", ItemWallet::new);
 
     public static final RegistryObject<Item> SECURITY_WRENCH = regItem("security_wrench", ItemSecurityWrench::new);
 

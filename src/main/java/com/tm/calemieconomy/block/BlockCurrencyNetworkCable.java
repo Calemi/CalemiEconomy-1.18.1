@@ -39,7 +39,7 @@ public class BlockCurrencyNetworkCable extends BlockCurrencyNetworkCableOpaque {
     private static final VoxelShape EAST_AABB = Block.box(6, 6, 6, 16, 10, 10);
     private static final VoxelShape SOUTH_AABB = Block.box(6, 6, 6, 10, 10, 16);
     private static final VoxelShape WEST_AABB = Block.box(0, 6, 6, 10, 10, 10);
-    private static final VoxelShape DOWNUP_AABB = Block.box(6, 0, 6, 10, 16, 11);
+    private static final VoxelShape DOWNUP_AABB = Block.box(6, 0, 6, 10, 16, 10);
     private static final VoxelShape NORTHSOUTH_AABB = Block.box(6, 6, 0, 10, 10, 16);
     private static final VoxelShape EASTWEST_AABB = Block.box(0, 6, 6, 16, 10, 10);
 

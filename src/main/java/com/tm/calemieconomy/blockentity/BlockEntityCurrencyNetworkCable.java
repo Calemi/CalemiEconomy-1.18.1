@@ -1,10 +1,12 @@
 package com.tm.calemieconomy.blockentity;
 
+import com.tm.calemicore.util.blockentity.BlockEntityBase;
 import com.tm.calemieconomy.init.InitBlockEntityTypes;
 import com.tm.calemieconomy.security.ISecurityHolder;
 import com.tm.calemieconomy.security.SecurityProfile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -28,5 +30,17 @@ public class BlockEntityCurrencyNetworkCable extends BlockEntityBase implements 
     @Override
     public SecurityProfile getSecurityProfile() {
         return profile;
+    }
+
+    @Override
+    public void load(CompoundTag tag) {
+        super.load(tag);
+        profile.loadFromNBT(tag);
+    }
+
+    @Override
+    protected void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
+        profile.saveToNBT(tag);
     }
 }

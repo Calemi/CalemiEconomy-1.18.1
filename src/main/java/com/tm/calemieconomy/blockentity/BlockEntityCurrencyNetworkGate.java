@@ -36,8 +36,6 @@ public class BlockEntityCurrencyNetworkGate extends BlockEntityCurrencyNetworkCa
      */
     public static void tick(Level level, BlockPos pos, BlockState state, BlockEntityCurrencyNetworkGate gate) {
 
-        LogHelper.logCommon(CEReference.MOD_NAME, level, "HEY");
-
         if (level != null) {
 
             if (level.getBestNeighborSignal(pos) > 0) {

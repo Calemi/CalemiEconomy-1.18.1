@@ -1,6 +1,6 @@
-package com.tm.calemieconomy.api;
+package com.tm.calemieconomy.util;
 
-public interface ICurrencyHolder {
+public interface IBlockCurrencyHolder {
 
     int getCurrency();
     int getCurrencyCapacity();

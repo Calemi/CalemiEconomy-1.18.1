@@ -94,7 +94,7 @@ dependencies {
     // at runtime, use the full JEI jar
     runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}")
 
-    implementation fg.deobf("curse.maven:calemicore-573646:3625192");
+    implementation fg.deobf("curse.maven:calemicore-573646:${core_file_id}");
 }
 
 jar {

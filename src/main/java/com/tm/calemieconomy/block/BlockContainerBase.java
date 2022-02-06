@@ -1,8 +1,8 @@
 package com.tm.calemieconomy.block;
 
 import com.tm.calemicore.util.Location;
+import com.tm.calemicore.util.blockentity.BlockEntityContainerBase;
 import com.tm.calemicore.util.helper.ItemHelper;
-import com.tm.calemieconomy.blockentity.BlockEntityContainerBase;
 import com.tm.calemieconomy.util.helper.SecurityHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;

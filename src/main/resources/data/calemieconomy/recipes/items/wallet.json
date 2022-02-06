@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "LLL",
+    "PCP",
+    "LLL"
+  ],
+  "key": {
+    "L": {
+      "item": "minecraft:leather"
+    },
+    "P": {
+      "item": "minecraft:paper"
+    },
+    "C": {
+      "item": "calemieconomy:coin_copper"
+    }
+  },
+  "result": {
+    "item": "calemieconomy:wallet",
+    "count": 1
+  }
+}

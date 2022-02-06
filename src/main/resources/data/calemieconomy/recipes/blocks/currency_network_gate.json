@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CNC",
+    "NRN",
+    "CNC"
+  ],
+  "key": {
+    "C": {
+      "item": "calemieconomy:coin_copper"
+    },
+    "N": {
+      "item": "calemieconomy:currency_network_cable"
+    },
+    "R": {
+      "item": "minecraft:repeater"
+    }
+  },
+  "result": {
+    "item": "calemieconomy:currency_network_gate",
+    "count": 1
+  }
+}

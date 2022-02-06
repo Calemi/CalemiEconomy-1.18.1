@@ -1,6 +1,6 @@
 package com.tm.calemieconomy.event;
 
-import com.tm.calemieconomy.api.CurrencyHelper;
+import com.tm.calemieconomy.util.helper.CurrencyHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.api.distmarker.Dist;

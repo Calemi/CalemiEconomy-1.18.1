@@ -2,9 +2,11 @@ package com.tm.calemieconomy.blockentity;
 
 import com.tm.calemicore.util.Location;
 
-public interface ICurrencyNetworkUnit {
+public interface ICurrencyNetworkUnit extends ICurrencyNetwork {
 
-    Location getBankLocation ();
+    BlockEntityBank getBank();
 
-    void setBankLocation (Location location);
+    Location getBankLocation();
+
+    void setBankLocation(Location location);
 }

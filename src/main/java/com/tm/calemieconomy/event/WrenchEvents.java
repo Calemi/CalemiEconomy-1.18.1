@@ -1,10 +1,10 @@
 package com.tm.calemieconomy.event;
 
 import com.tm.calemicore.util.Location;
+import com.tm.calemicore.util.blockentity.BlockEntityBase;
 import com.tm.calemicore.util.helper.ItemHelper;
-import com.tm.calemieconomy.api.CurrencyHelper;
-import com.tm.calemieconomy.api.ICurrencyHolder;
-import com.tm.calemieconomy.blockentity.BlockEntityBase;
+import com.tm.calemieconomy.util.IBlockCurrencyHolder;
+import com.tm.calemieconomy.util.helper.CurrencyHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
@@ -30,7 +30,7 @@ public class WrenchEvents {
         }
 
         //Handles currency saving.
-        if (blockEntity instanceof ICurrencyHolder currencyHolder) {
+        if (blockEntity instanceof IBlockCurrencyHolder currencyHolder) {
 
             if (currencyHolder.getCurrency() > 0) {
                 CompoundTag tag = stack.getOrCreateTag();
@@ -53,7 +53,7 @@ public class WrenchEvents {
 
             BlockEntity blockEntity = event.getWorld().getBlockEntity(event.getPos());
 
-            if (blockEntity instanceof BlockEntityBase blockEntityBase && blockEntity instanceof ICurrencyHolder currencyHolder) {
+            if (blockEntity instanceof BlockEntityBase blockEntityBase && blockEntity instanceof IBlockCurrencyHolder currencyHolder) {
                 ItemStack mainStack = player.getItemInHand(InteractionHand.MAIN_HAND);
                 ItemStack offStack = player.getItemInHand(InteractionHand.OFF_HAND);
 
@@ -67,7 +67,7 @@ public class WrenchEvents {
      * Used to check if a stack hold currency, and if it does, transfer it to the block.
      * Called twice for main & off hand.
      */
-    private boolean transferCurrencyToBlock(ItemStack stack, BlockEntityBase blockEntity, ICurrencyHolder currencyHolder) {
+    private boolean transferCurrencyToBlock(ItemStack stack, BlockEntityBase blockEntity, IBlockCurrencyHolder currencyHolder) {
 
         //Checks if the held Item is a Block.
         if (stack.getItem() instanceof BlockItem) {

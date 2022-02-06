@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CIC",
+    "IWI",
+    "CIC"
+  ],
+  "key": {
+    "C": {
+      "item": "calemieconomy:coin_copper"
+    },
+    "I": {
+      "item" : "minecraft:iron_ingot"
+    },
+    "W": {
+      "item": "calemieconomy:wallet"
+    }
+  },
+  "result": {
+    "item": "calemieconomy:bank",
+    "count": 1
+  }
+}

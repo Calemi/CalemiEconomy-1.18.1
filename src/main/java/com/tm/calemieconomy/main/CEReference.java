@@ -11,5 +11,5 @@ public class CEReference {
     public static final String MOD_ID = "calemieconomy";
     public static final String MOD_NAME = "Calemi's Economy";
 
-    public static final ResourceLocation GUI_TEXTURES = new ResourceLocation(CEReference.MOD_ID, "textures/gui/gui_textures.png");
+    public static final ResourceLocation GUI_TABS = new ResourceLocation(CEReference.MOD_ID, "textures/gui/tabs.png");
 }

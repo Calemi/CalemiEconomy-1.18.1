@@ -56,7 +56,7 @@ public class ItemMoneyBag extends Item {
             giveCoins(level, player, CEConfig.economy.richMoneyBagMin.get(), CEConfig.economy.richMoneyBagMax.get());
         }
 
-        return new InteractionResultHolder<>(InteractionResult.FAIL, stack);
+        return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
     }
 
     private void giveCoins(Level level, Player player, int minAmount, int maxAmount) {

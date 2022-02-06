@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "calemieconomy:currency_network_cable"
+    }
+  ],
+  "result": {
+    "item": "calemieconomy:currency_network_cable_opaque",
+    "count": 1
+  }
+}
