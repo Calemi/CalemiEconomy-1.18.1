@@ -2,8 +2,8 @@ package com.tm.calemieconomy.screen;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.tm.calemicore.util.helper.MathHelper;
-import com.tm.calemicore.util.screen.ButtonRect;
 import com.tm.calemicore.util.screen.ScreenContainerBase;
+import com.tm.calemicore.util.screen.widget.ButtonRect;
 import com.tm.calemieconomy.blockentity.BlockEntityBank;
 import com.tm.calemieconomy.item.ItemWallet;
 import com.tm.calemieconomy.main.CEReference;

@@ -2,12 +2,12 @@ package com.tm.calemieconomy.menu;
 
 import com.tm.calemicore.util.helper.LogHelper;
 import com.tm.calemicore.util.menu.MenuItemBase;
+import com.tm.calemicore.util.menu.slot.SlotFilter;
 import com.tm.calemieconomy.init.InitItems;
 import com.tm.calemieconomy.init.InitMenuTypes;
 import com.tm.calemieconomy.item.ItemCoin;
 import com.tm.calemieconomy.item.ItemWallet;
 import com.tm.calemieconomy.main.CEReference;
-import com.tm.calemieconomy.util.IItemCurrencyHolder;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;

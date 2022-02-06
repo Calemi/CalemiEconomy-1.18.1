@@ -1,4 +1,4 @@
-package com.tm.calemieconomy.block;
+package com.tm.calemieconomy.block.base;
 
 import com.tm.calemicore.util.Location;
 import com.tm.calemicore.util.blockentity.BlockEntityContainerBase;

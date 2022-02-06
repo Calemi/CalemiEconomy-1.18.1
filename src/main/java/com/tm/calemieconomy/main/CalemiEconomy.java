@@ -9,7 +9,6 @@ import com.tm.calemieconomy.screen.ScreenBank;
 import com.tm.calemieconomy.screen.ScreenTradingPost;
 import com.tm.calemieconomy.screen.ScreenWallet;
 import com.tm.calemieconomy.tab.CETab;
-import com.tm.calemieconomy.world.RaritaniumOreGeneration;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.world.item.CreativeModeTab;
@@ -58,7 +57,7 @@ public class CalemiEconomy {
     }
 
     private void onCommonSetup(final FMLCommonSetupEvent event) {
-        RaritaniumOreGeneration.init();
+        InitOres.init();
         CEPacketHandler.init();
         MinecraftForge.EVENT_BUS.register(new WrenchEvents());
         MinecraftForge.EVENT_BUS.register(new SecurityEvents());

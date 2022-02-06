@@ -1,6 +1,7 @@
 package com.tm.calemieconomy.block;
 
 import com.tm.calemicore.util.helper.LoreHelper;
+import com.tm.calemieconomy.block.base.BlockContainerBase;
 import com.tm.calemieconomy.init.InitBlockEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;

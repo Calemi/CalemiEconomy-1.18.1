@@ -1,6 +1,7 @@
 package com.tm.calemieconomy.menu;
 
 import com.tm.calemicore.util.menu.MenuBlockBase;
+import com.tm.calemicore.util.menu.slot.SlotFilter;
 import com.tm.calemieconomy.blockentity.BlockEntityBank;
 import com.tm.calemieconomy.init.InitItems;
 import com.tm.calemieconomy.init.InitMenuTypes;

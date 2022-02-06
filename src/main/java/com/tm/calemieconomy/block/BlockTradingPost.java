@@ -6,6 +6,7 @@ import com.tm.calemicore.util.helper.InventoryHelper;
 import com.tm.calemicore.util.helper.ItemHelper;
 import com.tm.calemicore.util.helper.LoreHelper;
 import com.tm.calemicore.util.helper.SoundHelper;
+import com.tm.calemieconomy.block.base.BlockContainerBase;
 import com.tm.calemieconomy.blockentity.BlockEntityBank;
 import com.tm.calemieconomy.blockentity.BlockEntityTradingPost;
 import com.tm.calemieconomy.init.InitBlockEntityTypes;
