@@ -9,7 +9,7 @@ public class InitOres {
 
         if (CEConfig.worldGen.raritaniumOreGen.get()) {
 
-            WorldGenHelper.registerOre("raritanium_ore", InitItems.RARITANIUM_ORE.get(), InitItems.RARITANIUM_ORE_DEEPSLATE.get(),
+            WorldGenHelper.registerOre("raritanium", InitItems.RARITANIUM_ORE.get(), InitItems.RARITANIUM_ORE_DEEPSLATE.get(),
                     CEConfig.worldGen.raritaniumVeinSize.get(),
                     CEConfig.worldGen.raritaniumVeinsPerChunk.get(),
                     CEConfig.worldGen.raritaniumOreGenMinY.get(),
