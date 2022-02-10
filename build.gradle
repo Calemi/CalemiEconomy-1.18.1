@@ -32,6 +32,9 @@ minecraft {
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
 
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
+
             mods {
                 "${mod_id}" {
                     source sourceSets.main
@@ -43,6 +46,9 @@ minecraft {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
+
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
 
             mods {
                 "${mod_id}" {
@@ -71,13 +77,18 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 repositories {
 
     maven {
-        name = "JEI maven"
+        name = "JEI Maven"
         url = "https://dvs1.progwml6.com/files/maven/"
     }
 
     maven {
-        name = "JEI Fallback"
+        name = "JEI Maven Fallback"
         url = "https://modmaven.dev"
+    }
+
+    maven {
+        name = "Curios Maven"
+        url = "https://maven.theillusivec4.top/"
     }
 
     maven {
@@ -93,6 +104,9 @@ dependencies {
     compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}:api")
     // at runtime, use the full JEI jar
     runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}")
+
+    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${minecraft_version}-${curios_version}")
+    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${minecraft_version}-${curios_version}:api")
 
     implementation fg.deobf("curse.maven:calemicore-573646:${core_file_id}")
 }

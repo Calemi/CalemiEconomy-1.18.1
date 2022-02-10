@@ -2,11 +2,13 @@ package com.tm.calemieconomy.item;
 
 import com.tm.calemicore.util.UnitMessenger;
 import com.tm.calemicore.util.helper.LoreHelper;
-import com.tm.calemieconomy.util.helper.CurrencyHelper;
-import com.tm.calemieconomy.util.IItemCurrencyHolder;
 import com.tm.calemieconomy.config.CEConfig;
+import com.tm.calemieconomy.curios.CuriosIntegration;
 import com.tm.calemieconomy.main.CalemiEconomy;
 import com.tm.calemieconomy.menu.MenuWallet;
+import com.tm.calemieconomy.util.IItemCurrencyHolder;
+import com.tm.calemieconomy.util.helper.CurrencyHelper;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
@@ -19,6 +21,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
@@ -34,6 +37,11 @@ public class ItemWallet extends Item implements IItemCurrencyHolder {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltipList, TooltipFlag advanced) {
+
+        if (CalemiEconomy.isCuriosLoaded) {
+            LoreHelper.addBlankLine(tooltipList);
+        }
+
         LoreHelper.addInformationLoreFirst(tooltipList, new TranslatableComponent("ce.lore.wallet"));
         LoreHelper.addControlsLoreFirst(tooltipList, new TranslatableComponent("ce.lore.wallet.use"), LoreHelper.ControlType.USE);
     }
@@ -109,5 +117,18 @@ public class ItemWallet extends Item implements IItemCurrencyHolder {
         if (canWithdrawCurrency(stack, amount)) {
             setCurrency(stack, getCurrency(stack) - amount);
         }
+    }
+
+    /**
+     * Adds behaviours to the Wallet as a curios Item.
+     */
+    @Override
+    public ICapabilityProvider initCapabilities(ItemStack stack, @org.jetbrains.annotations.Nullable CompoundTag nbt) {
+
+        if (CalemiEconomy.isCuriosLoaded) {
+            return CuriosIntegration.walletCapability();
+        }
+
+        return super.initCapabilities(stack, nbt);
     }
 }

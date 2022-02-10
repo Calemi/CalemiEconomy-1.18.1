@@ -1,7 +1,9 @@
 package com.tm.calemieconomy.util.helper;
 
 import com.tm.calemicore.util.helper.StringHelper;
+import com.tm.calemieconomy.init.InitItems;
 import com.tm.calemieconomy.item.ItemWallet;
+import com.tm.calemieconomy.main.CalemiEconomy;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -10,6 +12,7 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import top.theillusivec4.curios.api.CuriosApi;
 
 import java.util.List;
 
@@ -31,12 +34,12 @@ public class CurrencyHelper {
         }
 
         //Priority #3 - Curios slot.
-        /*if (CalemiUtils.curiosLoaded) {
+        if (CalemiEconomy.isCuriosLoaded) {
 
             if (CuriosApi.getCuriosHelper().findEquippedCurio(InitItems.WALLET.get(), player).isPresent()) {
                 return CuriosApi.getCuriosHelper().findEquippedCurio(InitItems.WALLET.get(), player).get().right;
             }
-        }*/
+        }
 
         //Priority #4 - Inventory (lowest slot id wins).
         for (int i = 0; i < player.getInventory().getContainerSize(); i++) {

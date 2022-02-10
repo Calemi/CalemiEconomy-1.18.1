@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -37,10 +38,14 @@ public class CalemiEconomy {
 
     public static final CreativeModeTab TAB = new CETab();
 
+    public static boolean isCuriosLoaded = false;
+
     /**
      * Everything starts here.
      */
     public CalemiEconomy() {
+
+        isCuriosLoaded = ModList.get().getModContainerById("curios").isPresent();
 
         //Initializes the instance.
         instance = this;
@@ -67,6 +72,7 @@ public class CalemiEconomy {
     private void onClientSetup(final FMLClientSetupEvent event) {
         InitKeyBindings.init();
 
+        MinecraftForge.EVENT_BUS.register(new CuriosEvent());
         MinecraftForge.EVENT_BUS.register(new CoinPickupSoundEvent());
         MinecraftForge.EVENT_BUS.register(new WrenchLoreEvent());
         MinecraftForge.EVENT_BUS.register(new WalletOverlayEvent());

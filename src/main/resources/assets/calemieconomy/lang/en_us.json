@@ -123,5 +123,10 @@
   "lore.control_type.release-use": "Release-Use",
   "lore.control_type.left-click-block": "Left-Click-Block",
   "lore.control_type.sneak-left-click-block": "Sneak-Left-Click-Block",
-  "lore.currency": "Currency"
+  "lore.currency": "Currency",
+
+
+
+
+  "curios.identifier.wallet" : "Wallet"
 }
