@@ -2,7 +2,7 @@ package com.tm.calemieconomy.block;
 
 import com.tm.calemicore.util.Location;
 import com.tm.calemicore.util.UnitMessenger;
-import com.tm.calemicore.util.helper.InventoryHelper;
+import com.tm.calemicore.util.helper.ContainerHelper;
 import com.tm.calemicore.util.helper.ItemHelper;
 import com.tm.calemicore.util.helper.LoreHelper;
 import com.tm.calemicore.util.helper.SoundHelper;
@@ -141,7 +141,7 @@ public class BlockTradingPost extends BlockContainerBase {
         ItemWallet wallet = (ItemWallet) walletStack.getItem();
 
         //Checks if the player has the required amount of items.
-        if (InventoryHelper.countItems(player.getInventory(), post.getStackForSale(), true) >= post.tradeAmount) {
+        if (ContainerHelper.countItems(player.getInventory(), post.getStackForSale(), true) >= post.tradeAmount) {
 
             //Generates the base Item Stack to purchase.
             ItemStack stackForSale = new ItemStack(post.getStackForSale().getItem(), post.tradeAmount);
@@ -152,7 +152,7 @@ public class BlockTradingPost extends BlockContainerBase {
             }
 
             //Checks if the Trading Post can fit the amount of items being bought.
-            if (InventoryHelper.canInsertStack(post, stackForSale) || post.adminMode) {
+            if (ContainerHelper.canInsertStack(post, stackForSale) || post.adminMode) {
 
                 //Checks if the player's current Wallet can fit added funds.
                 if (wallet.canDepositCurrency(walletStack, post.tradePrice)) {
@@ -161,13 +161,13 @@ public class BlockTradingPost extends BlockContainerBase {
                     if (post.adminMode || post.tradePrice <= 0 || bank.canWithdrawCurrency(post.tradePrice)) {
 
                         //Removes the Items from the player.
-                        InventoryHelper.consumeItems(player.getInventory(), post.getStackForSale(), post.tradeAmount, true);
+                        ContainerHelper.consumeItems(player.getInventory(), post.getStackForSale(), post.tradeAmount, true);
 
                         //Checks if not in admin mode.
                         if (!post.adminMode) {
 
                             //Adds Items to the Trading Post
-                            InventoryHelper.insertOverflowingStack(post, stackForSale);
+                            ContainerHelper.insertOverflowingStack(post, stackForSale);
 
                             //Subtracts funds from the connected Bank
                             bank.withdrawCurrency(post.tradePrice);
@@ -230,7 +230,7 @@ public class BlockTradingPost extends BlockContainerBase {
                     wallet.withdrawCurrency(walletStack, post.tradePrice);
 
                     //Removes the amount of Items for sale.
-                    if (!post.adminMode) InventoryHelper.consumeItems(post, post.getStackForSale(), post.tradeAmount, true);
+                    if (!post.adminMode) ContainerHelper.consumeItems(post, post.getStackForSale(), post.tradeAmount, true);
 
                     SoundHelper.playAtPlayer(player, InitSounds.COIN.get(), 0.1F, 1F);
                 }

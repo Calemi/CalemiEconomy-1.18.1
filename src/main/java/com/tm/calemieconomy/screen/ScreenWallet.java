@@ -7,7 +7,7 @@ import com.tm.calemicore.util.helper.ScreenHelper;
 import com.tm.calemicore.util.helper.StringHelper;
 import com.tm.calemicore.util.screen.ScreenContainerBase;
 import com.tm.calemicore.util.screen.ScreenRect;
-import com.tm.calemicore.util.screen.widget.ButtonRect;
+import com.tm.calemicore.util.screen.widget.SmoothButton;
 import com.tm.calemieconomy.util.helper.CurrencyHelper;
 import com.tm.calemieconomy.util.IItemCurrencyHolder;
 import com.tm.calemieconomy.init.InitItems;
@@ -71,7 +71,7 @@ public class ScreenWallet extends ScreenContainerBase<MenuWallet> {
         for (int index = 0; index < 4; index++) {
 
             int id = index;
-            addRenderableWidget(new ButtonRect(getScreenX() + 146, getScreenY() + 15 + (index * 18), 16, "+", (btn) -> addMoney(id)));
+            addRenderableWidget(new SmoothButton(getScreenX() + 146, getScreenY() + 15 + (index * 18), 16, "+", (btn) -> addMoney(id)));
         }
     }
 
@@ -112,7 +112,7 @@ public class ScreenWallet extends ScreenContainerBase<MenuWallet> {
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
             RenderSystem.setShaderTexture(0, this.textureLocation);
-            ScreenHelper.drawRect(poseStack, 0, 0, new ScreenRect(this.getScreenX(), this.getScreenY(), this.imageWidth, this.imageHeight), 0);
+            ScreenHelper.drawRect(0, 0, new ScreenRect(this.getScreenX(), this.getScreenY(), this.imageWidth, this.imageHeight), 0);
         }
 
         ScreenHelper.drawItemStack(itemRenderer, new ItemStack(InitItems.COIN_COPPER.get()), getScreenX() + 127, getScreenY() + 15);

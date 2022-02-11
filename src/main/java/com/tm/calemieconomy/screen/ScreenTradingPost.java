@@ -6,8 +6,8 @@ import com.tm.calemicore.util.helper.MathHelper;
 import com.tm.calemicore.util.helper.ScreenHelper;
 import com.tm.calemicore.util.helper.StringHelper;
 import com.tm.calemicore.util.screen.ScreenContainerBase;
-import com.tm.calemicore.util.screen.widget.ButtonRect;
 import com.tm.calemicore.util.screen.widget.FakeSlot;
+import com.tm.calemicore.util.screen.widget.SmoothButton;
 import com.tm.calemieconomy.blockentity.BlockEntityTradingPost;
 import com.tm.calemieconomy.config.CEConfig;
 import com.tm.calemieconomy.main.CEReference;
@@ -30,7 +30,7 @@ public class ScreenTradingPost extends ScreenContainerBase<MenuTradingPost> {
 
     private final BlockEntityTradingPost post;
     private FakeSlot fakeSlot;
-    private ButtonRect sellModeBtn;
+    private SmoothButton sellModeBtn;
 
     private final int upY = 40;
     private final int downY = 59;
@@ -51,34 +51,34 @@ public class ScreenTradingPost extends ScreenContainerBase<MenuTradingPost> {
         fakeSlot.setItemStack(post.getStackForSale());
 
         //Subtract Amount
-        addRenderableWidget(new ButtonRect(getScreenX() + 50, getScreenY() + upY, 16, "-", (btn) -> {
+        addRenderableWidget(new SmoothButton(getScreenX() + 50, getScreenY() + upY, 16, "-", (btn) -> {
             changeAmount(-MathHelper.getShiftCtrlInt(1, 10, 100, 1000));
         }));
         //Add Amount
-        addRenderableWidget(new ButtonRect(getScreenX() + 110, getScreenY() + upY, 16, "+", (btn) -> {
+        addRenderableWidget(new SmoothButton(getScreenX() + 110, getScreenY() + upY, 16, "+", (btn) -> {
             changeAmount(MathHelper.getShiftCtrlInt(1, 10, 100, 1000));
         }));
 
         //Subtract Price
-        addRenderableWidget(new ButtonRect(getScreenX() + 50, getScreenY() + downY, 16, "-", (btn) -> {
+        addRenderableWidget(new SmoothButton(getScreenX() + 50, getScreenY() + downY, 16, "-", (btn) -> {
             changePrice(-MathHelper.getShiftCtrlInt(1, 10, 100, 1000));
         }));
         //Add Price
-        addRenderableWidget(new ButtonRect(getScreenX() + 110, getScreenY() + downY, 16, "+", (btn) -> {
+        addRenderableWidget(new SmoothButton(getScreenX() + 110, getScreenY() + downY, 16, "+", (btn) -> {
             changePrice(MathHelper.getShiftCtrlInt(1, 10, 100, 1000));
         }));
 
         //Reset Amount
-        addRenderableWidget(new ButtonRect(getScreenX() + 128, getScreenY() + upY, 16, "R", (btn) -> {
+        addRenderableWidget(new SmoothButton(getScreenX() + 128, getScreenY() + upY, 16, "R", (btn) -> {
             resetAmount();
         }));
         //Reset Price
-        addRenderableWidget(new ButtonRect(getScreenX() + 128, getScreenY() + downY, 16, "R", (btn) -> {
+        addRenderableWidget(new SmoothButton(getScreenX() + 128, getScreenY() + downY, 16, "R", (btn) -> {
             resetPrice();
         }));
 
-        sellModeBtn = addRenderableWidget(new ButtonRect(getScreenX() + 21, getScreenY() + 19, 38, post.buyMode ? "screen.trading_post.btn.buying" : "screen.trading_post.btn.selling", (btn) -> toggleMode()));
-        if (CEConfig.economy.tradingPostBroadcasts.get()) addRenderableWidget(new ButtonRect(getScreenX() + 105, getScreenY() + 19, 60, "screen.trading_post.btn.broadcast", (btn) -> broadcast()));
+        sellModeBtn = addRenderableWidget(new SmoothButton(getScreenX() + 21, getScreenY() + 19, 38, post.buyMode ? "screen.trading_post.btn.buying" : "screen.trading_post.btn.selling", (btn) -> toggleMode()));
+        if (CEConfig.economy.tradingPostBroadcasts.get()) addRenderableWidget(new SmoothButton(getScreenX() + 105, getScreenY() + 19, 60, "screen.trading_post.btn.broadcast", (btn) -> broadcast()));
     }
 
     /**

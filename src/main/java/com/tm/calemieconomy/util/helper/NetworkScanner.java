@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 public class NetworkScanner extends BlockScanner {
 
     public NetworkScanner(Location location) {
-        super(location, null, 2304);
+        super(location, null, 2304, true);
     }
 
     public void startNetworkScan(Direction[] directions) {

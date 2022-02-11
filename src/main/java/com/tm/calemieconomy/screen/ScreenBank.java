@@ -3,7 +3,7 @@ package com.tm.calemieconomy.screen;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.tm.calemicore.util.helper.MathHelper;
 import com.tm.calemicore.util.screen.ScreenContainerBase;
-import com.tm.calemicore.util.screen.widget.ButtonRect;
+import com.tm.calemicore.util.screen.widget.SmoothButton;
 import com.tm.calemieconomy.blockentity.BlockEntityBank;
 import com.tm.calemieconomy.item.ItemWallet;
 import com.tm.calemieconomy.main.CEReference;
@@ -35,8 +35,8 @@ public class ScreenBank extends ScreenContainerBase<MenuBank> {
     protected void init() {
         super.init();
 
-        addRenderableWidget(new ButtonRect(getScreenX() + (imageWidth / 2) + 30 - 25, getScreenY() + 40, 50, "screen.bank.btn.withdraw", (btn) -> withdraw()));
-        addRenderableWidget(new ButtonRect(getScreenX() + (imageWidth / 2) - 30 - 25, getScreenY() + 40, 50, "screen.bank.btn.deposit", (btn) -> deposit()));
+        addRenderableWidget(new SmoothButton(getScreenX() + (imageWidth / 2) + 30 - 25, getScreenY() + 40, 50, "screen.bank.btn.withdraw", (btn) -> withdraw()));
+        addRenderableWidget(new SmoothButton(getScreenX() + (imageWidth / 2) - 30 - 25, getScreenY() + 40, 50, "screen.bank.btn.deposit", (btn) -> deposit()));
     }
 
     /**

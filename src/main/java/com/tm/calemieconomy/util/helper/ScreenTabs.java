@@ -15,7 +15,7 @@ public class ScreenTabs {
     public static void addIconTab(PoseStack poseStack, int u, int v, int x, int y, int mouseX, int mouseY, TranslatableComponent... text) {
         //Tab
         RenderSystem.setShaderTexture(0, CEReference.GUI_TABS);
-        ScreenHelper.drawRect(poseStack, u, v, new ScreenRect(x - 13, y, 13, 15), 0);
+        ScreenHelper.drawRect(u, v, new ScreenRect(x - 13, y, 13, 15), 0);
 
         //Hover Text
         ScreenRect hoverRect = new ScreenRect(x - 13, y, 13, 15);
@@ -47,7 +47,7 @@ public class ScreenTabs {
 
         RenderSystem.setShaderTexture(0, CEReference.GUI_TABS);
 
-        ScreenHelper.drawExpandableRect(poseStack, 0, 218, new ScreenRect(x - width, y, width, sizeY), 255, 22, 10);
+        ScreenHelper.drawExpandableRect(0, 218, new ScreenRect(x - width, y, width, sizeY), 255, 22, 10);
 
         if (!text.isEmpty()) {
             poseStack.pushPose();
