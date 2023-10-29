@@ -15,24 +15,26 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.commands.arguments.item.ItemArgument;
 import net.minecraft.commands.arguments.item.ItemInput;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.entity.player.Player;
 
 public class EconomyCommand {
 
     /**
      * Registers all the commands.
      */
-    public static void register (CommandDispatcher<CommandSourceStack> dispatcher) {
+    public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
 
         LiteralArgumentBuilder<CommandSourceStack> plotCommand = Commands.literal("trades");
 
         plotCommand.requires(commandSource -> true)
                 .then(find())
+                .then(findByPlayer())
                 .then(checkstock())
                 .then(modifiers())
                 .then(reload());
@@ -45,7 +47,7 @@ public class EconomyCommand {
 
         return Commands.literal("modifiers").executes(ctx -> {
 
-            ctx.getSource().getPlayerOrException().sendMessage(new TextComponent(ChatFormatting.YELLOW + "---[Modifiers]---"),  Util.NIL_UUID);
+            ctx.getSource().getPlayerOrException().sendMessage(new TextComponent(ChatFormatting.YELLOW + "---[Modifiers]---"), Util.NIL_UUID);
 
             for (ScheduledRandomPriceModifier priceModifier : ScheduledRandomPriceModifiersFile.list) {
 
@@ -59,12 +61,12 @@ public class EconomyCommand {
                     msg.append(new TextComponent(" costs "));
                 }
 
-                msg.append("" + ChatFormatting.GOLD + (int)(priceModifier.getPriceModifier() * 100) + "%" + ChatFormatting.WHITE + " of its original price.");
+                msg.append("" + ChatFormatting.GOLD + (int) (priceModifier.getPriceModifier() * 100) + "%" + ChatFormatting.WHITE + " of its original price.");
 
                 ctx.getSource().getPlayerOrException().sendMessage(msg, Util.NIL_UUID);
             }
 
-            ctx.getSource().getPlayerOrException().sendMessage(new TextComponent(ChatFormatting.YELLOW + "---[End of List]---"),  Util.NIL_UUID);
+            ctx.getSource().getPlayerOrException().sendMessage(new TextComponent(ChatFormatting.YELLOW + "---[End of List]---"), Util.NIL_UUID);
 
             return Command.SINGLE_SUCCESS;
         });
@@ -78,21 +80,55 @@ public class EconomyCommand {
 
             boolean foundPost = false;
 
-            ctx.getSource().getPlayerOrException().sendMessage(new TextComponent(ChatFormatting.YELLOW + "---[Trading Posts]---"),  Util.NIL_UUID);
+            ctx.getSource().getPlayerOrException().sendMessage(new TextComponent(ChatFormatting.YELLOW + "---[Trading Posts]---"), Util.NIL_UUID);
 
             for (BlockEntityTradingPost post : TradingPostHelper.allTradingPosts.values()) {
 
                 if (post.getStackForSale().getItem() == (itemInput.getItem())) {
                     MutableComponent info = post.getTradeInfo().append(" ").append(post.getPriceInfo(false)).append(" ").append(new TranslatableComponent(post.msgKey + "at")).append(" ").append(post.getLocationInfo());
-                    ctx.getSource().getPlayerOrException().sendMessage(info,  Util.NIL_UUID);
+                    ctx.getSource().getPlayerOrException().sendMessage(info, Util.NIL_UUID);
                     foundPost = true;
                 }
             }
 
-            ctx.getSource().getPlayerOrException().sendMessage(new TextComponent(ChatFormatting.YELLOW + "---[End of List]---"),  Util.NIL_UUID);
+            ctx.getSource().getPlayerOrException().sendMessage(new TextComponent(ChatFormatting.YELLOW + "---[End of List]---"), Util.NIL_UUID);
 
             if (!foundPost) {
-                ctx.getSource().getPlayerOrException().sendMessage(new TextComponent(ChatFormatting.YELLOW + "Could not find any Trading Posts trading that item."),  Util.NIL_UUID);
+                ctx.getSource().getPlayerOrException().sendMessage(new TextComponent(ChatFormatting.YELLOW + "Could not find any Trading Posts trading that item."), Util.NIL_UUID);
+            }
+
+            return Command.SINGLE_SUCCESS;
+
+        }));
+    }
+
+    private static ArgumentBuilder<CommandSourceStack, ?> findByPlayer() {
+
+        return Commands.literal("findbyplayer").then(Commands.argument("playerName", EntityArgument.player()).executes(ctx -> {
+
+            Player player = EntityArgument.getPlayer(ctx, "playerName");
+
+            boolean foundPost = false;
+
+            ctx.getSource().getPlayerOrException().sendMessage(new TextComponent(ChatFormatting.YELLOW + "---[Trading Posts]---"), Util.NIL_UUID);
+
+            for (BlockEntityTradingPost post : TradingPostHelper.allTradingPosts.values()) {
+
+                if (post.adminMode) {
+                    continue;
+                }
+
+                if (post.getSecurityProfile().isOwner(player)) {
+                    MutableComponent info = post.getTradeInfo().append(" ").append(post.getPriceInfo(false)).append(" ").append(new TranslatableComponent(post.msgKey + "at")).append(" ").append(post.getLocationInfo());
+                    ctx.getSource().getPlayerOrException().sendMessage(info, Util.NIL_UUID);
+                    foundPost = true;
+                }
+            }
+
+            ctx.getSource().getPlayerOrException().sendMessage(new TextComponent(ChatFormatting.YELLOW + "---[End of List]---"), Util.NIL_UUID);
+
+            if (!foundPost) {
+                ctx.getSource().getPlayerOrException().sendMessage(new TextComponent(ChatFormatting.YELLOW + "Could not find any Trading Posts from that player."), Util.NIL_UUID);
             }
 
             return Command.SINGLE_SUCCESS;
@@ -105,7 +141,7 @@ public class EconomyCommand {
 
             boolean foundPost = false;
 
-            ctx.getSource().getPlayerOrException().sendMessage(new TextComponent(ChatFormatting.YELLOW + "---[Trading Posts]---"),  Util.NIL_UUID);
+            ctx.getSource().getPlayerOrException().sendMessage(new TextComponent(ChatFormatting.YELLOW + "---[Trading Posts]---"), Util.NIL_UUID);
 
             for (BlockEntityTradingPost post : TradingPostHelper.allTradingPosts.values()) {
 
@@ -125,16 +161,16 @@ public class EconomyCommand {
                     message.append(ChatFormatting.GOLD + post.getLocation().toString());
                     message.append(new TextComponent(" has ").append(ChatFormatting.GOLD + "" + post.getStock()).append(" item(s) in stock."));
 
-                    ctx.getSource().getPlayerOrException().sendMessage(message,  Util.NIL_UUID);
+                    ctx.getSource().getPlayerOrException().sendMessage(message, Util.NIL_UUID);
 
                     foundPost = true;
                 }
             }
 
-            ctx.getSource().getPlayerOrException().sendMessage(new TextComponent(ChatFormatting.YELLOW + "---[End of List]---"),  Util.NIL_UUID);
+            ctx.getSource().getPlayerOrException().sendMessage(new TextComponent(ChatFormatting.YELLOW + "---[End of List]---"), Util.NIL_UUID);
 
             if (!foundPost) {
-                ctx.getSource().getPlayerOrException().sendMessage(new TextComponent(ChatFormatting.YELLOW + "Could not find any Trading Posts you own."),  Util.NIL_UUID);
+                ctx.getSource().getPlayerOrException().sendMessage(new TextComponent(ChatFormatting.YELLOW + "Could not find any Trading Posts you own."), Util.NIL_UUID);
             }
 
             return Command.SINGLE_SUCCESS;
@@ -149,7 +185,7 @@ public class EconomyCommand {
             ScheduledRandomPriceModifiersFile.init();
             DirtyFile.markDirty();
 
-            ctx.getSource().getPlayerOrException().sendMessage(new TextComponent(ChatFormatting.GREEN + "Reload Complete!"),  Util.NIL_UUID);
+            ctx.getSource().getPlayerOrException().sendMessage(new TextComponent(ChatFormatting.GREEN + "Reload Complete!"), Util.NIL_UUID);
 
             return Command.SINGLE_SUCCESS;
         });

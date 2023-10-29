@@ -1,4 +1,5 @@
 [v1.0.16]
+- New command "/trades findbyplayer <playerName>" that lists all Trading Posts owned by the specified Player.
 - Trading Posts can now be automated with pipes.
 - Wallets cannot be opened if the stack size is greater than 1.
 - Wallets cannot be withdrawn or deposited to in a Bank if the stack size is greater than 1.
