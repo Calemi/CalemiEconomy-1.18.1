@@ -3,6 +3,7 @@ package com.tm.calemieconomy.client.render;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.tm.calemicore.util.render.RenderedFloatingItemStack;
 import com.tm.calemieconomy.blockentity.BlockEntityTradingPost;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -19,6 +20,10 @@ public class RenderTradingPost implements BlockEntityRenderer<BlockEntityTrading
 
     @Override
     public void render(BlockEntityTradingPost post, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight, int packedOverlay) {
+
+        if (Minecraft.getInstance().player.distanceToSqr(post.getLocation().getVector()) > 500) {
+            return;
+        }
 
         renderedItemStack.setStack(post.getStackForSale());
 

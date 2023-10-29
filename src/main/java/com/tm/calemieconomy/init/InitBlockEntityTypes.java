@@ -1,9 +1,6 @@
 package com.tm.calemieconomy.init;
 
-import com.tm.calemieconomy.blockentity.BlockEntityBank;
-import com.tm.calemieconomy.blockentity.BlockEntityCurrencyNetworkCable;
-import com.tm.calemieconomy.blockentity.BlockEntityCurrencyNetworkGate;
-import com.tm.calemieconomy.blockentity.BlockEntityTradingPost;
+import com.tm.calemieconomy.blockentity.*;
 import com.tm.calemieconomy.main.CEReference;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;

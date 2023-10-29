@@ -1,4 +1,4 @@
-package com.tm.calemieconomy.event;
+package com.tm.calemieconomy.event.listener;
 
 import com.tm.calemieconomy.block.BlockBank;
 import com.tm.calemieconomy.item.ItemWallet;

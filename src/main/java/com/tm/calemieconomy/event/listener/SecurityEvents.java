@@ -1,4 +1,4 @@
-package com.tm.calemieconomy.event;
+package com.tm.calemieconomy.event.listener;
 
 import com.tm.calemicore.util.Location;
 import com.tm.calemicore.util.blockentity.BlockEntityBase;

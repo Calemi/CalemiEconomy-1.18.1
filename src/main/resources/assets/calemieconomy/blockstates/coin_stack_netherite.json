@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "": [
+      {"model": "calemieconomy:block/coin_stack_netherite"},
+      {"model": "calemieconomy:block/coin_stack_netherite", "y": 90},
+      {"model": "calemieconomy:block/coin_stack_netherite", "y": 180},
+      {"model": "calemieconomy:block/coin_stack_netherite", "y": 270}
+    ]
+  }
+}

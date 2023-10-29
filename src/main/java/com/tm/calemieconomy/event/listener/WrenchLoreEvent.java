@@ -1,4 +1,4 @@
-package com.tm.calemieconomy.event;
+package com.tm.calemieconomy.event.listener;
 
 import com.tm.calemieconomy.util.helper.CurrencyHelper;
 import net.minecraft.nbt.CompoundTag;
@@ -21,7 +21,7 @@ public class WrenchLoreEvent {
 
             CompoundTag tag = event.getItemStack().getOrCreateTag();
 
-            int currency = CurrencyHelper.loadFromNBT(tag);
+            long currency = CurrencyHelper.loadFromNBT(tag);
 
             if (currency != 0) {
                 event.getToolTip().add(new TextComponent(" "));

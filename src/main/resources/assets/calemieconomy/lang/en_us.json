@@ -23,6 +23,7 @@
   "block.calemieconomy.coin_stack_silver": "Silver Coin",
   "block.calemieconomy.coin_stack_gold": "Gold Coin",
   "block.calemieconomy.coin_stack_platinum": "Platinum Coin",
+  "block.calemieconomy.coin_stack_netherite": "Netherite Coin",
   "ce.lore.coin.value": "Value",
   "block.calemieconomy.currency_network_cable": "Currency Network Cable",
   "block.calemieconomy.currency_network_cable_opaque": "Currency Network Cable (Opaque)",
@@ -37,24 +38,31 @@
   "ce.lore.trading_post.use": "Buy or Sell Item",
   "ce.lore.trading_post.use-wrench": "(Security Wrench) Open Inventory",
   "ce.lore.trading_post.sneak-use": "Show Trade Info",
+  "block.calemieconomy.region_protector": "Region Protector",
 
 
 
 
 
-  "screen.tab.info.1": "Button Click Info",
-  "screen.tab.info.2": "Shift: 10, Ctrl: 100, Shift + Ctrl: 1,000",
+  "screen.tab.info.btn.1": "Button Click Info",
+  "screen.tab.info.btn.2": "Shift: 10, Ctrl: 100, Shift + Ctrl: 1,000",
+  "screen.scroll.change": "Change",
+  "screen.scroll.shift": "[SHIFT]",
+  "screen.scroll.current": "Current",
   "container.bank": "Bank",
   "screen.bank.btn.withdraw": "Withdraw",
   "screen.bank.btn.deposit": "Deposit",
   "screen.bank.error.1": "Inactive!",
   "screen.bank.error.2": "Another Bank is connected in the network!",
+  "screen.true": "True",
+  "screen.false": "False",
   "container.trading_post": "Trading Post",
   "screen.trading_post.txt.amount": "Amount",
   "screen.trading_post.txt.price": "Price",
   "screen.trading_post.btn.selling": "Selling",
   "screen.trading_post.btn.buying": "Buying",
   "screen.trading_post.btn.broadcast": "Broadcast",
+  "screen.trading_post.btn.advanced_options": "A",
   "ce.msg.trading_post.broadcast.admin": "The Server",
   "ce.msg.trading_post.broadcast.is": "is",
   "ce.msg.trading_post.broadcast.selling": "selling",
@@ -62,6 +70,38 @@
   "ce.msg.trading_post.broadcast.free": "free",
   "ce.msg.trading_post.broadcast.for": "for",
   "ce.msg.trading_post.broadcast.at": "at",
+  "ce.msg.trading_post.broadcast.price": "Price",
+  "ce.msg.trading_post.broadcast.resting": "Resting",
+  "ce.msg.trading_post.broadcast.current": "Current",
+  "ce.msg.trading_post.broadcast.min": "Min",
+  "ce.msg.trading_post.broadcast.max": "Max",
+  "ce.msg.trading_post.broadcast.dynamic": "(Dynamic)",
+  "container.trading_post_bulk_trade": "Bulk Trade",
+  "screen.trading_post_bulk_trade.btn.sell": "Sell",
+  "screen.trading_post_bulk_trade.btn.sell_all": "Sell All",
+  "screen.trading_post_bulk_trade.btn.buy": "Buy",
+  "screen.trading_post_bulk_trade.txt.sets": "Sets",
+  "screen.trading_post_bulk_trade.txt.notenoughmoney": "You do not have the require currency!",
+  "screen.trading_post_bulk_trade.txt.price": "Price",
+  "screen.trading_post_bulk_trade.txt.wallet": "Wallet",
+  "screen.trading_post_advanced_options.label.file_key": "File Key",
+  "screen.trading_post_advanced_options.label.dynamic_price": "Dynamic Price",
+  "screen.trading_post_advanced_options.label.extremum": "Extremum",
+  "screen.trading_post_advanced_options.label.vary_rate": "Vary Rate (RC per trade)",
+  "screen.trading_post_advanced_options.label.stable_rate": "Stable Rate (RC per minute)",
+  "screen.trading_post_advanced_options.label.reset_current_price": "Reset Current Price",
+  "screen.trading_post_advanced_options.btn.reset": "Reset",
+  "screen.regionprotector.btn.rule.off": "OFF",
+  "screen.regionprotector.btn.rule.allow": "ALLOW",
+  "screen.regionprotector.btn.rule.prevent": "PREVENT",
+  "screen.regionprotector.txt.priority": "Priority",
+  "screen.regionprotector.txt.regionoffset": "Region Offset",
+  "screen.regionprotector.txt.regionedge": "Region Edge",
+  "screen.regionprotector.txt.rule.blockbreaking": "Block Breaking",
+  "screen.regionprotector.txt.rule.blockplacing": "Block Placing",
+  "screen.regionprotector.txt.rule.blockusing": "Block Using",
+  "screen.regionprotector.txt.rule.entityhurting": "Entity Hurting",
+  "screen.regionprotector.txt.rule.entityinteracting": "Entity Interacting",
   "container.wallet": "Wallet",
 
 
@@ -94,6 +134,8 @@
   "unit.trading_post.msg.error.stock-full": "The Trading Post is too full of stock!",
   "unit.trading_post.msg.error.stock-empty": "The Trading Post does not have enough stock!",
   "unit.trading_post.msg.error.no-items": "You do not have the required item(s) the Trading Post is looking for!",
+  "unit.trading_post.msg.error.amount-overflow": "You cannot trade using that many items! Max is 1,728!",
+  "unit.trading_post.msg.error.inv-full": "You cannot fit that many items in your inventory!",
   "unit.wallet.name": "Wallet",
 
 
@@ -128,5 +170,12 @@
 
 
 
-  "curios.identifier.wallet" : "Wallet"
+  "curios.identifier.wallet" : "Wallet",
+  
+  
+  
+  "stat.calemieconomy.item_sold": "Item Sold amount to Trading Post",
+  "stat.calemieconomy.bought_sold": "Item Bought amount from Trading Post",
+  "stat.calemieconomy.total_sold": "Total Items sold to Trading Post",
+  "stat.calemieconomy.total_bought": "Total Items bought from Trading Post"
 }

@@ -7,6 +7,7 @@ import com.tm.calemieconomy.init.InitBlockEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
@@ -25,7 +26,7 @@ import java.util.List;
 public class BlockBank extends BlockContainerBase {
 
     public BlockBank() {
-        super(Block.Properties.of(Material.STONE).sound(SoundType.WOOD).strength(2));
+        super(Block.Properties.of(Material.STONE).sound(SoundType.WOOD).strength(-1.0F, 3600000.0F));
     }
 
     @Override

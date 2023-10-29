@@ -27,13 +27,15 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
 
-    mappings channel: 'parchment', version: "2021.12.19-1.18.1"
+    mappings channel: 'parchment', version: "1.18.1-2022.03.06-1.18.2"
 
     runs {
         client {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
+
+
 
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
@@ -49,6 +51,7 @@ minecraft {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
+
 
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
@@ -111,7 +114,9 @@ dependencies {
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${minecraft_version}-${curios_version}")
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${minecraft_version}-${curios_version}:api")
 
-    implementation fg.deobf("curse.maven:calemicore-573646:${core_file_id}")
+    implementation fg.deobf("curse.maven:pipez-443900:3819249")
+
+    implementation fg.deobf("curse.maven:ccore-573646:${core_file_id}")
 }
 
 jar {
@@ -137,6 +142,9 @@ curseforge {
         changelog = file('changelog.txt')
         releaseType = 'release'
         addGameVersion "${minecraft_version}"
+        relations {
+            requiredDependency 'ccore'
+        }
     }
 }
 

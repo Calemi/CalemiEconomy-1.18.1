@@ -4,6 +4,7 @@ import com.tm.calemicore.util.helper.ItemHelper;
 import com.tm.calemieconomy.init.InitItems;
 import com.tm.calemieconomy.item.ItemCoin;
 import com.tm.calemieconomy.item.ItemWallet;
+import com.tm.calemieconomy.util.helper.CEContainerHelper;
 import com.tm.calemieconomy.util.helper.CurrencyHelper;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
@@ -57,7 +58,7 @@ public class PacketExtractWalletCurrency {
                     if (walletStack.getItem() instanceof ItemWallet wallet) {
 
                         Item item = InitItems.COIN_COPPER.get();
-                        int price = ((ItemCoin) InitItems.COIN_COPPER.get()).value;
+                        long price = ((ItemCoin) InitItems.COIN_COPPER.get()).value;
 
                         if (buttonId == 1) {
                             item = InitItems.COIN_SILVER.get();
@@ -74,10 +75,22 @@ public class PacketExtractWalletCurrency {
                             price = ((ItemCoin) InitItems.COIN_PLATINUM.get()).value;
                         }
 
+                        else if (buttonId == 4) {
+                            item = InitItems.COIN_NETHERITE.get();
+                            price = ((ItemCoin) InitItems.COIN_NETHERITE.get()).value;
+                        }
+
                         price *= multiplier;
 
-                        wallet.withdrawCurrency(walletStack, price);
-                        ItemHelper.spawnStackAtEntity(player.getLevel(), player, new ItemStack(item, multiplier));
+                        if (wallet.getCurrency(walletStack) >= price) {
+
+                            ItemStack coinStack = new ItemStack(item);
+
+                            if (CEContainerHelper.canInsertStack(player.getInventory(), coinStack, multiplier, 0, 36)) {
+                                wallet.withdrawCurrency(walletStack, price);
+                                CEContainerHelper.insertStack(player.getInventory(), coinStack, multiplier, 0, 36);
+                            }
+                        }
                     }
                 }
             }

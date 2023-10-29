@@ -14,12 +14,12 @@ public class MenuBank extends MenuBlockBase {
         super(InitMenuTypes.BANK.get(), containerID, bank);
 
         //Coin Slot
-        addSlot(new SlotFilter(bank, 0, 62, 18, InitItems.COIN_COPPER.get(), InitItems.COIN_SILVER.get(), InitItems.COIN_GOLD.get(), InitItems.COIN_PLATINUM.get()));
+        addSlot(new SlotFilter(bank, 0, 26, 17, InitItems.COIN_COPPER.get(), InitItems.COIN_SILVER.get(), InitItems.COIN_GOLD.get(), InitItems.COIN_PLATINUM.get(), InitItems.COIN_NETHERITE.get()));
 
         //Wallet Slot
-        addSlot(new SlotFilter(bank, 1, 98, 18, InitItems.WALLET.get()));
+        addSlot(new SlotFilter(bank, 1, 26, 53, InitItems.WALLET.get()));
 
-        addPlayerInventory(playerInv, 62);
+        addPlayerInventory(playerInv, 95);
     }
 
     public MenuBank(int containerID, Inventory playerInv, BlockPos pos) {

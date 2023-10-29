@@ -23,9 +23,9 @@ public class MenuWallet extends MenuItemBase {
         super(InitMenuTypes.WALLET.get(), containerID, walletStack);
 
         walletContainer = new SimpleContainer(1);
-        addSlot(new SlotFilter(walletContainer, 0, 17, 42, InitItems.COIN_COPPER.get(), InitItems.COIN_SILVER.get(), InitItems.COIN_GOLD.get(), InitItems.COIN_PLATINUM.get()));
+        addSlot(new SlotFilter(walletContainer, 0, 17, 51, InitItems.COIN_COPPER.get(), InitItems.COIN_SILVER.get(), InitItems.COIN_GOLD.get(), InitItems.COIN_PLATINUM.get(), InitItems.COIN_NETHERITE.get()));
 
-        addPlayerInventory(playerInv, 94);
+        addPlayerInventory(playerInv, 116);
     }
 
     /**
@@ -43,7 +43,7 @@ public class MenuWallet extends MenuItemBase {
 
             if (getItemStack().getItem() instanceof ItemWallet wallet) {
 
-                int amountToAdd = 0;
+                long amountToAdd = 0;
                 int stacksToRemove = 0;
 
                 //Iterates through every count of the Stack. Ex: a stack of 32 will iterate 32 times.

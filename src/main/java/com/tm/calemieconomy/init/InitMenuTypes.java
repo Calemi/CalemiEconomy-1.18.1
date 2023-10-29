@@ -1,8 +1,11 @@
 package com.tm.calemieconomy.init;
 
+import com.tm.calemicore.util.helper.LogHelper;
+import com.tm.calemieconomy.config.CEConfig;
 import com.tm.calemieconomy.main.CEReference;
 import com.tm.calemieconomy.menu.MenuBank;
 import com.tm.calemieconomy.menu.MenuTradingPost;
+import com.tm.calemieconomy.menu.MenuTradingPostBulkTrade;
 import com.tm.calemieconomy.menu.MenuWallet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -26,6 +29,7 @@ public class InitMenuTypes {
 
     public static final RegistryObject<MenuType<MenuBank>> BANK = MENU_TYPES.register("bank", regBlockMenu(MenuBank::new));
     public static final RegistryObject<MenuType<MenuTradingPost>> TRADING_POST = MENU_TYPES.register("trading_post", regBlockMenu(MenuTradingPost::new));
+    public static final RegistryObject<MenuType<MenuTradingPostBulkTrade>> TRADING_POST_BULK_TRADE = MENU_TYPES.register("trading_post_bulk_trade", regBlockMenu(MenuTradingPostBulkTrade::new));
 
     public static final RegistryObject<MenuType<MenuWallet>> WALLET = MENU_TYPES.register("wallet", regItemMenu(MenuWallet::new));
 

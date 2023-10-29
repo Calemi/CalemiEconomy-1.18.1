@@ -45,6 +45,7 @@ public class InitItems {
     public static final RegistryObject<Block> COIN_STACK_SILVER =      BLOCKS.register("coin_stack_silver", BlockCoinStack::new);
     public static final RegistryObject<Block> COIN_STACK_GOLD =        BLOCKS.register("coin_stack_gold", BlockCoinStack::new);
     public static final RegistryObject<Block> COIN_STACK_PLATINUM =    BLOCKS.register("coin_stack_platinum", BlockCoinStack::new);
+    public static final RegistryObject<Block> COIN_STACK_NETHERITE =   BLOCKS.register("coin_stack_netherite", BlockCoinStack::new);
 
     public static final RegistryObject<Block> CURRENCY_NETWORK_CABLE =        regBlock("currency_network_cable", CalemiEconomy.TAB, BlockCurrencyNetworkCable::new);
     public static final RegistryObject<Block> CURRENCY_NETWORK_CABLE_OPAQUE = regBlock("currency_network_cable_opaque", CalemiEconomy.TAB, BlockCurrencyNetworkCableOpaque::new);
@@ -60,6 +61,7 @@ public class InitItems {
     public static final RegistryObject<Item> COIN_SILVER =     regItem("coin_silver", () -> new ItemCoin(5, COIN_STACK_SILVER.get()));
     public static final RegistryObject<Item> COIN_GOLD =       regItem("coin_gold", () -> new ItemCoin(25, COIN_STACK_GOLD.get()));
     public static final RegistryObject<Item> COIN_PLATINUM =   regItem("coin_platinum", () -> new ItemCoin(100, COIN_STACK_PLATINUM.get()));
+    public static final RegistryObject<Item> COIN_NETHERITE =  regItem("coin_netherite", () -> new ItemCoin(1000, COIN_STACK_NETHERITE.get()));
 
     public static final RegistryObject<Item> MONEY_BAG_CHEAP = regItem("money_bag_cheap", () -> new ItemMoneyBag(false));
     public static final RegistryObject<Item> MONEY_BAG_RICH =  regItem("money_bag_rich", () -> new ItemMoneyBag(true));

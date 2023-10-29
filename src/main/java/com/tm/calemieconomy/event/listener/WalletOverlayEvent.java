@@ -1,4 +1,4 @@
-package com.tm.calemieconomy.event;
+package com.tm.calemieconomy.event.listener;
 
 import com.tm.calemicore.util.helper.ScreenHelper;
 import com.tm.calemieconomy.util.helper.CurrencyHelper;
@@ -55,8 +55,8 @@ public class WalletOverlayEvent {
 
                         CEConfig.WalletOverlayPosition walletPosition = CEConfig.WalletOverlayPosition.byName(CEConfig.overlay.walletOverlayPosition.get());
 
-                        int currency = currencyHolder.getCurrency(walletStack);
-                        MutableComponent currencyStr = CurrencyHelper.formatCurrency(currency);
+                        long currency = currencyHolder.getCurrency(walletStack);
+                        MutableComponent currencyStr = CurrencyHelper.formatCurrency(currency, true);
 
                         int xOffsetStr = 0;
                         int xOffsetItem = 0;

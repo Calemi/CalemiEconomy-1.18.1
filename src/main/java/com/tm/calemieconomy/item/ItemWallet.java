@@ -6,8 +6,10 @@ import com.tm.calemieconomy.config.CEConfig;
 import com.tm.calemieconomy.curios.CuriosIntegration;
 import com.tm.calemieconomy.main.CalemiEconomy;
 import com.tm.calemieconomy.menu.MenuWallet;
+import com.tm.calemieconomy.tab.CETab;
 import com.tm.calemieconomy.util.IItemCurrencyHolder;
 import com.tm.calemieconomy.util.helper.CurrencyHelper;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -17,6 +19,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -33,6 +36,17 @@ public class ItemWallet extends Item implements IItemCurrencyHolder {
 
     public ItemWallet() {
         super(new Item.Properties().tab(CalemiEconomy.TAB).stacksTo(1));
+    }
+
+    @Override
+    public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> items) {
+        super.fillItemCategory(tab, items);
+
+        if (tab == CalemiEconomy.TAB) {
+            ItemStack stack = new ItemStack(this);
+            setCurrency(stack, CEConfig.economy.walletCurrencyCapacity.get());
+            items.add(stack);
+        }
     }
 
     @Override
@@ -53,6 +67,10 @@ public class ItemWallet extends Item implements IItemCurrencyHolder {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
 
         ItemStack stack = player.getItemInHand(hand);
+
+        if (stack.getCount() > 1) {
+            return new InteractionResultHolder<>(InteractionResult.FAIL, stack);
+        }
 
         //Checks if on server & if the Player is a Server Player.
         if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
@@ -79,32 +97,32 @@ public class ItemWallet extends Item implements IItemCurrencyHolder {
     }
 
     @Override
-    public int getCurrency(ItemStack stack) {
+    public long getCurrency(ItemStack stack) {
         return CurrencyHelper.loadFromNBT(stack.getOrCreateTag());
     }
 
     @Override
-    public int getCurrencyCapacity() {
+    public long getCurrencyCapacity() {
         return CEConfig.economy.walletCurrencyCapacity.get();
     }
 
     @Override
-    public void setCurrency(ItemStack stack, int amount) {
+    public void setCurrency(ItemStack stack, long amount) {
         CurrencyHelper.saveToNBT(stack.getOrCreateTag(), amount);
     }
 
     @Override
-    public boolean canDepositCurrency(ItemStack stack, int amount) {
+    public boolean canDepositCurrency(ItemStack stack, long amount) {
         return getCurrency(stack) + amount <= getCurrencyCapacity();
     }
 
     @Override
-    public boolean canWithdrawCurrency(ItemStack stack, int amount) {
+    public boolean canWithdrawCurrency(ItemStack stack, long amount) {
         return getCurrency(stack) >= amount;
     }
 
     @Override
-    public void depositCurrency(ItemStack stack, int amount) {
+    public void depositCurrency(ItemStack stack, long amount) {
 
         if (canDepositCurrency(stack, amount)) {
             setCurrency(stack, getCurrency(stack) + amount);
@@ -112,7 +130,7 @@ public class ItemWallet extends Item implements IItemCurrencyHolder {
     }
 
     @Override
-    public void withdrawCurrency(ItemStack stack, int amount) {
+    public void withdrawCurrency(ItemStack stack, long amount) {
 
         if (canWithdrawCurrency(stack, amount)) {
             setCurrency(stack, getCurrency(stack) - amount);

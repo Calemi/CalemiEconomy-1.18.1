@@ -1,4 +1,4 @@
-package com.tm.calemieconomy.event;
+package com.tm.calemieconomy.event.listener;
 
 import com.tm.calemicore.util.Location;
 import com.tm.calemicore.util.helper.RayTraceHelper;
@@ -6,6 +6,7 @@ import com.tm.calemicore.util.helper.ScreenHelper;
 import com.tm.calemieconomy.blockentity.BlockEntityTradingPost;
 import com.tm.calemieconomy.config.CEConfig;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.MutableComponent;
@@ -61,9 +62,15 @@ public class TradingPostOverlayEvent {
                             ItemStack stackForSale = post.getStackForSale();
 
                             MutableComponent postName = new TextComponent(post.getSecurityProfile().getOwnerName()).append("'s ").append(new TranslatableComponent("unit.trading_post.name"));
-                            MutableComponent info = post.getTradeInfo(false);
 
-                            ScreenHelper.drawTextBox(event.getMatrixStack(), midX - 3, midY + 12, 0, true, 0xFFFFFF, postName, info);
+                            if (post.adminMode) {
+                                postName = new TranslatableComponent("unit.trading_post.name");
+                            }
+
+                            MutableComponent info = post.getTradeInfo();
+                            MutableComponent price = post.getPriceInfo(Screen.hasShiftDown());
+
+                            ScreenHelper.drawTextBox(event.getMatrixStack(), midX - 3, midY + 12, 0, true, 0xFFFFFF, postName, info, price);
                         }
                     }
                 }

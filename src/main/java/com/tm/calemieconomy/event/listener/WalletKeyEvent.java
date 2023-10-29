@@ -1,4 +1,4 @@
-package com.tm.calemieconomy.event;
+package com.tm.calemieconomy.event.listener;
 
 import com.tm.calemieconomy.util.helper.CurrencyHelper;
 import com.tm.calemieconomy.init.InitKeyBindings;

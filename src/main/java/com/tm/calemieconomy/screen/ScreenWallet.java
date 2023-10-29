@@ -4,7 +4,6 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.tm.calemicore.util.helper.MathHelper;
 import com.tm.calemicore.util.helper.ScreenHelper;
-import com.tm.calemicore.util.helper.StringHelper;
 import com.tm.calemicore.util.screen.ScreenContainerBase;
 import com.tm.calemicore.util.screen.ScreenRect;
 import com.tm.calemicore.util.screen.widget.SmoothButton;
@@ -17,7 +16,7 @@ import com.tm.calemieconomy.main.CEReference;
 import com.tm.calemieconomy.menu.MenuWallet;
 import com.tm.calemieconomy.packet.CEPacketHandler;
 import com.tm.calemieconomy.packet.PacketExtractWalletCurrency;
-import com.tm.calemieconomy.util.helper.ScreenTabs;
+import com.tm.calemieconomy.util.helper.CEScreenHelper;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -36,7 +35,7 @@ public class ScreenWallet extends ScreenContainerBase<MenuWallet> {
         super(menu, playerInv, title);
         player = playerInv.player;
         inventoryLabelY = Integer.MAX_VALUE;
-        imageHeight = 176;
+        imageHeight = 198;
     }
 
     public int getScreenX() {
@@ -68,7 +67,7 @@ public class ScreenWallet extends ScreenContainerBase<MenuWallet> {
     protected void init() {
         super.init();
 
-        for (int index = 0; index < 4; index++) {
+        for (int index = 0; index < 5; index++) {
 
             int id = index;
             addRenderableWidget(new SmoothButton(getScreenX() + 146, getScreenY() + 15 + (index * 18), 16, "+", (btn) -> addMoney(id)));
@@ -88,10 +87,11 @@ public class ScreenWallet extends ScreenContainerBase<MenuWallet> {
 
             ItemWallet walletItem = (ItemWallet) walletStack.getItem();
 
-            int price = ((ItemCoin) InitItems.COIN_COPPER.get()).value;
+            long price = ((ItemCoin) InitItems.COIN_COPPER.get()).value;
             if (id == 1) price = ((ItemCoin) InitItems.COIN_SILVER.get()).value;
             else if (id == 2) price = ((ItemCoin) InitItems.COIN_GOLD.get()).value;
             else if (id == 3) price = ((ItemCoin) InitItems.COIN_PLATINUM.get()).value;
+            else if (id == 4) price = ((ItemCoin) InitItems.COIN_NETHERITE.get()).value;
 
             int multiplier = MathHelper.getShiftCtrlInt(1, 16, 64, 9 * 64);
             price *= multiplier;
@@ -115,17 +115,13 @@ public class ScreenWallet extends ScreenContainerBase<MenuWallet> {
             ScreenHelper.drawRect(0, 0, new ScreenRect(this.getScreenX(), this.getScreenY(), this.imageWidth, this.imageHeight), 0);
         }
 
-        ScreenHelper.drawItemStack(itemRenderer, new ItemStack(InitItems.COIN_COPPER.get()), getScreenX() + 127, getScreenY() + 15);
-        ScreenHelper.drawItemStack(itemRenderer, new ItemStack(InitItems.COIN_SILVER.get()), getScreenX() + 127, getScreenY() + 33);
-        ScreenHelper.drawItemStack(itemRenderer, new ItemStack(InitItems.COIN_GOLD.get()), getScreenX() + 127, getScreenY() + 51);
-        ScreenHelper.drawItemStack(itemRenderer, new ItemStack(InitItems.COIN_PLATINUM.get()), getScreenX() + 127, getScreenY() + 69);
+        int itemYOffset = getScreenY() - 3;
 
-        ItemStack stack = getCurrentWalletStack();
-
-        if (!stack.isEmpty() && stack.getItem() instanceof IItemCurrencyHolder currencyHolder) {
-            ScreenHelper.drawCenteredString(poseStack, getScreenX() + getXSize() / 2 - 16, getScreenY() + 42, 0, 0x555555, new TextComponent(StringHelper.insertCommas(currencyHolder.getCurrency(stack))));
-            ScreenHelper.drawCenteredString(poseStack, getScreenX() + getXSize() / 2 - 16, getScreenY() + 51, 0, 0x555555, new TranslatableComponent("ce.rc"));
-        }
+        ScreenHelper.drawItemStack(itemRenderer, new ItemStack(InitItems.COIN_COPPER.get()), getScreenX() + 127, itemYOffset += 18);
+        ScreenHelper.drawItemStack(itemRenderer, new ItemStack(InitItems.COIN_SILVER.get()), getScreenX() + 127, itemYOffset += 18);
+        ScreenHelper.drawItemStack(itemRenderer, new ItemStack(InitItems.COIN_GOLD.get()), getScreenX() + 127, itemYOffset += 18);
+        ScreenHelper.drawItemStack(itemRenderer, new ItemStack(InitItems.COIN_PLATINUM.get()), getScreenX() + 127, itemYOffset += 18);
+        ScreenHelper.drawItemStack(itemRenderer, new ItemStack(InitItems.COIN_NETHERITE.get()), getScreenX() + 127, itemYOffset + 18);
     }
 
     @Override
@@ -134,6 +130,12 @@ public class ScreenWallet extends ScreenContainerBase<MenuWallet> {
         super.render(poseStack, mouseX, mouseY, partialTick);
         this.renderTooltip(poseStack, mouseX, mouseY);
 
-        ScreenTabs.addIconTab(poseStack, 0, 0, getScreenX(), getScreenY() + 5, mouseX, mouseY, new TranslatableComponent("screen.tab.info.1"), new TranslatableComponent("screen.tab.info.2"));
+        ItemStack stack = getCurrentWalletStack();
+
+        if (!stack.isEmpty() && stack.getItem() instanceof IItemCurrencyHolder currencyHolder) {
+            CEScreenHelper.drawCurrencyStringCentered(poseStack, getScreenX() + (getXSize() / 2) - 15, getScreenY() + 55, mouseX, mouseY, currencyHolder.getCurrency(stack));
+        }
+
+        CEScreenHelper.addIconTab(poseStack, 0, 0, getScreenX(), getScreenY() + 5, mouseX, mouseY, new TranslatableComponent("screen.tab.info.btn.1"), new TranslatableComponent("screen.tab.info.btn.2"));
     }
 }

@@ -1,4 +1,4 @@
-package com.tm.calemieconomy.event;
+package com.tm.calemieconomy.event.listener;
 
 import com.tm.calemicore.util.Location;
 import com.tm.calemicore.util.blockentity.BlockEntityBase;
@@ -72,7 +72,7 @@ public class WrenchEvents {
         //Checks if the held Item is a Block.
         if (stack.getItem() instanceof BlockItem) {
 
-            int currency = CurrencyHelper.loadFromNBT(stack.getOrCreateTag());
+            long currency = CurrencyHelper.loadFromNBT(stack.getOrCreateTag());
 
             if (currency != 0) {
                 currencyHolder.setCurrency(currency);

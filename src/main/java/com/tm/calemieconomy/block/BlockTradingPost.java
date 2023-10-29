@@ -3,22 +3,27 @@ package com.tm.calemieconomy.block;
 import com.tm.calemicore.util.Location;
 import com.tm.calemicore.util.UnitMessenger;
 import com.tm.calemicore.util.helper.ContainerHelper;
-import com.tm.calemicore.util.helper.ItemHelper;
 import com.tm.calemicore.util.helper.LoreHelper;
 import com.tm.calemicore.util.helper.SoundHelper;
 import com.tm.calemieconomy.block.base.BlockContainerBase;
 import com.tm.calemieconomy.blockentity.BlockEntityBank;
 import com.tm.calemieconomy.blockentity.BlockEntityTradingPost;
+import com.tm.calemieconomy.event.ItemTradeEvent;
 import com.tm.calemieconomy.init.InitBlockEntityTypes;
 import com.tm.calemieconomy.init.InitItems;
 import com.tm.calemieconomy.init.InitSounds;
+import com.tm.calemieconomy.init.InitStats;
 import com.tm.calemieconomy.item.ItemWallet;
+import com.tm.calemieconomy.menu.MenuTradingPostBulkTrade;
+import com.tm.calemieconomy.util.helper.CEContainerHelper;
 import com.tm.calemieconomy.util.helper.CurrencyHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -35,6 +40,8 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -60,6 +67,10 @@ public class BlockTradingPost extends BlockContainerBase {
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 
+        if (hand == InteractionHand.OFF_HAND) {
+            return InteractionResult.PASS;
+        }
+
         Location location = new Location(level, pos);
 
         ItemStack heldStack = player.getItemInHand(hand);
@@ -70,34 +81,37 @@ public class BlockTradingPost extends BlockContainerBase {
         //Makes sure the Block is a Trading Post.
         if (te instanceof BlockEntityTradingPost post) {
 
-            //If the Player is crouching and holding a Security Wrench, open the GUI.
-            if (!player.isCrouching() && heldStack.getItem() == InitItems.SECURITY_WRENCH.get()) {
+            if (!player.isCrouching()) {
 
-                if (post.adminMode) {
-                    if (player.isCreative()) return super.use(state, level, pos, player, hand, hit);
-                    else if (!level.isClientSide()) MESSENGER.sendErrorMessage(MESSENGER.getMessage("error.admin"), player);
+                //If the Player is holding a Security Wrench, open the GUI.
+                if (heldStack.getItem() == InitItems.SECURITY_WRENCH.get()) {
+
+                    if (post.adminMode) {
+                        if (player.isCreative()) return super.use(state, level, pos, player, hand, hit);
+                        else if (!level.isClientSide()) MESSENGER.sendErrorMessage(MESSENGER.getMessage("error.admin"), player);
+                    }
+
+                    else return super.use(state, level, pos, player, hand, hit);
                 }
-
-                else return super.use(state, level, pos, player, hand, hit);
             }
 
-            //Else, if the Player is not crouching and has a Wallet, handle a possible trade.
-            else if (!player.isCrouching() && !walletStack.isEmpty()) {
-                handleTrade(level, player, post);
+            if (!walletStack.isEmpty() && post.hasValidTradeOffer) {
+
+                if (!level.isClientSide() && player.isCrouching()) {
+                    openBulkTradeGui((ServerPlayer) player, post);
+                }
+
+                else if (!player.isCrouching()) {
+                    handleTrade(level, player, post, 1, post.tradeAmount, post.price.getPrice());
+                }
             }
 
-            //Otherwise, handle printing what the owner is trading.
-            else if (!level.isClientSide()) {
+            else if (!level.isClientSide() && walletStack.isEmpty()) {
+                MESSENGER.sendMessage(MESSENGER.getMessage("hold-wallet"), player);
+            }
 
-                if (post.hasValidTradeOffer) {
-
-                    MESSENGER.sendMessage(post.getTradeInfo(false), player);
-                    MESSENGER.sendMessage(MESSENGER.getMessage("hold-wallet"), player);
-                }
-
-                else {
-                    MESSENGER.sendErrorMessage(MESSENGER.getMessage("error.invalid"), player);
-                }
+            else if (!level.isClientSide() && !post.hasValidTradeOffer) {
+                MESSENGER.sendErrorMessage(MESSENGER.getMessage("error.invalid"), player);
             }
         }
 
@@ -107,24 +121,26 @@ public class BlockTradingPost extends BlockContainerBase {
     /**
      * Handles the trading system. Decides if the trade is valid and if it is a sell or a purchase.
      */
-    private void handleTrade(Level level, Player player, BlockEntityTradingPost post) {
+    public static void handleTrade(Level level, Player player, BlockEntityTradingPost post, int sets, int tradeAmount, long tradePrice) {
 
         BlockEntityBank bank = post.getBank();
         ItemStack walletStack = CurrencyHelper.getCurrentWallet(player);
 
         //Checks if there is a connected bank OR if the price is free OR if the Trading Post is in admin mode.
-        if (bank != null || post.tradePrice <= 0 || post.adminMode) {
+        if (bank != null || tradePrice <= 0 || post.adminMode) {
 
             //Checks if the trade is set up properly
             if (post.hasValidTradeOffer) {
 
                 //If the Trading Post is in buy mode, handle a sell.
                 if (post.buyMode) {
-                    handleSell(walletStack, level, player, post, bank);
+                    handleSell(walletStack, level, player, post, bank, sets, tradeAmount, tradePrice);
                 }
 
                 //If not, handle a purchase.
-                else handlePurchase(walletStack, level, player, post, bank);
+                else {
+                    handlePurchase(walletStack, level, player, post, bank, sets, tradeAmount, tradePrice);
+                }
             }
 
             else if (!level.isClientSide()) MESSENGER.sendErrorMessage(MESSENGER.getMessage("error.invalid"), player);
@@ -136,15 +152,15 @@ public class BlockTradingPost extends BlockContainerBase {
     /**
      * Handles the selling system.
      */
-    private void handleSell(ItemStack walletStack, Level level, Player player, BlockEntityTradingPost post, BlockEntityBank bank) {
+    public static void handleSell(ItemStack walletStack, Level level, Player player, BlockEntityTradingPost post, BlockEntityBank bank, int sets, int sellAmount, long sellPrice) {
 
         ItemWallet wallet = (ItemWallet) walletStack.getItem();
 
         //Checks if the player has the required amount of items.
-        if (ContainerHelper.countItems(player.getInventory(), post.getStackForSale(), true) >= post.tradeAmount) {
+        if (ContainerHelper.countItems(player.getInventory(), post.getStackForSale(), true) >= sellAmount) {
 
             //Generates the base Item Stack to purchase.
-            ItemStack stackForSale = new ItemStack(post.getStackForSale().getItem(), post.tradeAmount);
+            ItemStack stackForSale = new ItemStack(post.getStackForSale().getItem(), sellAmount);
 
             //Sets any NBT to the purchased item.
             if (post.getStackForSale().hasTag()) {
@@ -155,13 +171,13 @@ public class BlockTradingPost extends BlockContainerBase {
             if (ContainerHelper.canInsertStack(post, stackForSale) || post.adminMode) {
 
                 //Checks if the player's current Wallet can fit added funds.
-                if (wallet.canDepositCurrency(walletStack, post.tradePrice)) {
+                if (wallet.canDepositCurrency(walletStack, sellPrice)) {
 
                     //Checks if the connected Bank has enough funds to spend. Bypasses this check if in admin mode
-                    if (post.adminMode || post.tradePrice <= 0 || bank.canWithdrawCurrency(post.tradePrice)) {
+                    if (post.adminMode || sellPrice <= 0 || bank.canWithdrawCurrency(sellPrice)) {
 
                         //Removes the Items from the player.
-                        ContainerHelper.consumeItems(player.getInventory(), post.getStackForSale(), post.tradeAmount, true);
+                        ContainerHelper.consumeItems(player.getInventory(), post.getStackForSale(), sellAmount, true);
 
                         //Checks if not in admin mode.
                         if (!post.adminMode) {
@@ -170,13 +186,25 @@ public class BlockTradingPost extends BlockContainerBase {
                             ContainerHelper.insertOverflowingStack(post, stackForSale);
 
                             //Subtracts funds from the connected Bank
-                            bank.withdrawCurrency(post.tradePrice);
+                            bank.withdrawCurrency(sellPrice);
+                        }
+
+                        else {
+                            player.awardStat(InitStats.ITEM_SOLD.get().get(post.getStackForSale().getItem()), sellAmount);
+                            InitStats.CustomStats.TOTAL_SOLD.addToPlayer(player, sellAmount);
+                            MinecraftForge.EVENT_BUS.post(new ItemTradeEvent.Sell(player, post.getStackForSale(), sellAmount, sellPrice));
                         }
 
                         //Adds funds to the Player's current wallet.
-                        wallet.depositCurrency(walletStack, post.tradePrice);
+                        wallet.depositCurrency(walletStack, sellPrice);
 
                         SoundHelper.playAtPlayer(player, InitSounds.COIN.get(), 0.1F, 1F);
+
+                        for (int i = 0; i < sets; i++) {
+                            post.price.vary();
+                        }
+
+                        post.markUpdated();
                     }
 
                     else if (!level.isClientSide()) MESSENGER.sendErrorMessage(MESSENGER.getMessage("error.bank-empty"), player);
@@ -194,51 +222,71 @@ public class BlockTradingPost extends BlockContainerBase {
     /**
      * Handles the purchasing system.
      */
-    private void handlePurchase(ItemStack walletStack, Level level, Player player, BlockEntityTradingPost post, BlockEntityBank bank) {
+    public static void handlePurchase(ItemStack walletStack, Level level, Player player, BlockEntityTradingPost post, BlockEntityBank bank, int sets, int buyAmount, long buyPrice) {
 
         ItemWallet wallet = (ItemWallet) walletStack.getItem();
 
         //Checks if the Trading Post has enough stock. Bypasses this check if in admin mode.
-        if (post.getStock() >= post.tradeAmount || post.adminMode) {
+        if (post.getStock() >= buyAmount || post.adminMode) {
 
-            //Checks if the Player has enough funds in his current Wallet.
-            if (wallet.canWithdrawCurrency(walletStack, post.tradePrice)) {
+            if (CEContainerHelper.canInsertStack(player.getInventory(), post.getStackForSale(), buyAmount, 0, 36)) {
 
-                //Checks if the connected Bank can store the possible funds.
-                if (post.adminMode || post.tradePrice <= 0|| bank.canDepositCurrency(post.tradePrice)) {
+                //Checks if the Player has enough funds in his current Wallet.
+                if (wallet.canWithdrawCurrency(walletStack, buyPrice)) {
 
-                    //Generates the base Item Stack to purchase.
-                    ItemStack stackForSale = new ItemStack(post.getStackForSale().getItem(), post.tradeAmount);
+                    //Checks if the connected Bank can store the possible funds.
+                    if (post.adminMode || buyPrice <= 0 || bank.canDepositCurrency(buyPrice)) {
 
-                    //Sets any NBT to the purchased item.
-                    if (post.getStackForSale().hasTag()) {
-                        stackForSale.setTag(post.getStackForSale().getTag());
-                    }
+                        //Generates the base Item Stack to purchase.
+                        ItemStack stackForSale = new ItemStack(post.getStackForSale().getItem(), buyAmount);
 
-                    if (!level.isClientSide()) {
+                        //Sets any NBT to the purchased item.
+                        if (post.getStackForSale().hasTag()) {
+                            stackForSale.setTag(post.getStackForSale().getTag());
+                        }
 
-                        //Generates and spawns the purchased Items.
-                        ItemHelper.spawnOverflowingStackAtEntity(player.getLevel(), player, stackForSale);
+                        if (!level.isClientSide()) {
 
-                        //Adds funds to the connected Bank.
-                        if (!post.adminMode) bank.depositCurrency(post.tradePrice);
+                            //Inserts the stack into the Player's inventory.
+                            CEContainerHelper.insertStack(player.getInventory(), stackForSale, buyAmount, 0, 36);
+
+                            //Adds funds to the connected Bank.
+                            if (!post.adminMode && buyPrice > 0) bank.depositCurrency(buyPrice);
+
+                            post.markUpdated();
+                        }
+
+                        //Subtracts funds from the Player's current Wallet.
+                        wallet.withdrawCurrency(walletStack, buyPrice);
+
+                        //Removes the amount of Items for sale.
+                        if (!post.adminMode) {
+                            ContainerHelper.consumeItems(post, post.getStackForSale(), buyAmount, true);
+                        }
+
+                        else {
+                            player.awardStat(InitStats.ITEM_BOUGHT.get().get(post.getStackForSale().getItem()), buyAmount);
+                            InitStats.CustomStats.TOTAL_BOUGHT.addToPlayer(player, buyAmount);
+                            MinecraftForge.EVENT_BUS.post(new ItemTradeEvent.Buy(player, post.getStackForSale(), buyAmount, buyPrice));
+
+                        }
+
+                        SoundHelper.playAtPlayer(player, InitSounds.COIN.get(), 0.1F, 1F);
+
+                        for (int i = 0; i < sets; i++) {
+                            post.price.vary();
+                        }
 
                         post.markUpdated();
                     }
 
-                    //Subtracts funds from the Player's current Wallet.
-                    wallet.withdrawCurrency(walletStack, post.tradePrice);
-
-                    //Removes the amount of Items for sale.
-                    if (!post.adminMode) ContainerHelper.consumeItems(post, post.getStackForSale(), post.tradeAmount, true);
-
-                    SoundHelper.playAtPlayer(player, InitSounds.COIN.get(), 0.1F, 1F);
+                    else if (!level.isClientSide()) MESSENGER.sendErrorMessage(MESSENGER.getMessage("error.bank-full"), player);
                 }
 
-                else if (!level.isClientSide()) MESSENGER.sendErrorMessage(MESSENGER.getMessage("error.bank-full"), player);
+                else if (!level.isClientSide()) MESSENGER.sendErrorMessage(MESSENGER.getMessage("error.wallet-empty"), player);
             }
 
-            else if (!level.isClientSide()) MESSENGER.sendErrorMessage(MESSENGER.getMessage("error.wallet-empty"), player);
+            else if (!level.isClientSide()) MESSENGER.sendErrorMessage(MESSENGER.getMessage("error.inv-full"), player);
         }
 
         else if (!level.isClientSide()) MESSENGER.sendErrorMessage(MESSENGER.getMessage("error.stock-empty"), player);
@@ -262,6 +310,12 @@ public class BlockTradingPost extends BlockContainerBase {
                 }
             }
         }
+    }
+
+    private void openBulkTradeGui(ServerPlayer player, BlockEntityTradingPost post) {
+        NetworkHooks.openGui(player, new SimpleMenuProvider((id, playerInventory, unused) -> {
+            return new MenuTradingPostBulkTrade(id, playerInventory, post);
+        }, new TranslatableComponent("container.trading_post_bulk_trade")), post.getBlockPos());
     }
 
     @Nullable

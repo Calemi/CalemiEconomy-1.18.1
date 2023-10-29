@@ -2,11 +2,11 @@ package com.tm.calemieconomy.util;
 
 public interface IBlockCurrencyHolder {
 
-    int getCurrency();
-    int getCurrencyCapacity();
-    void setCurrency(int amount);
-    boolean canDepositCurrency(int amount);
-    boolean canWithdrawCurrency(int amount);
-    void depositCurrency(int amount);
-    void withdrawCurrency(int amount);
+    long getCurrency();
+    long getCurrencyCapacity();
+    void setCurrency(long amount);
+    boolean canDepositCurrency(long amount);
+    boolean canWithdrawCurrency(long amount);
+    void depositCurrency(long amount);
+    void withdrawCurrency(long amount);
 }

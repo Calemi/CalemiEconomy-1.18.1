@@ -2,7 +2,7 @@ package com.tm.calemieconomy.item;
 
 import com.tm.calemicore.util.Location;
 import com.tm.calemicore.util.helper.LoreHelper;
-import com.tm.calemieconomy.event.WrenchEvents;
+import com.tm.calemieconomy.event.listener.WrenchEvents;
 import com.tm.calemieconomy.main.CalemiEconomy;
 import com.tm.calemieconomy.security.ISecurityHolder;
 import com.tm.calemieconomy.util.helper.SecurityHelper;

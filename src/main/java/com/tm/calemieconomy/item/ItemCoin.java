@@ -1,8 +1,8 @@
 package com.tm.calemieconomy.item;
 
-import com.tm.calemieconomy.util.helper.CurrencyHelper;
 import com.tm.calemieconomy.block.base.BlockItemBase;
 import com.tm.calemieconomy.main.CalemiEconomy;
+import com.tm.calemieconomy.util.helper.CurrencyHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -20,9 +20,9 @@ import java.util.List;
 
 public class ItemCoin extends BlockItemBase {
 
-    public final int value;
+    public final long value;
 
-    public ItemCoin(int value, Block coinStack) {
+    public ItemCoin(long value, Block coinStack) {
         super(coinStack, CalemiEconomy.TAB);
         this.value = value;
     }
@@ -30,10 +30,10 @@ public class ItemCoin extends BlockItemBase {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltipList, TooltipFlag advanced) {
 
-        tooltipList.add(new TranslatableComponent("ce.lore.coin.value").withStyle(ChatFormatting.GRAY).append(" (1): ").append(CurrencyHelper.formatCurrency(value).withStyle(ChatFormatting.GOLD)));
+        tooltipList.add(new TranslatableComponent("ce.lore.coin.value").withStyle(ChatFormatting.GRAY).append(" (1): ").append(CurrencyHelper.formatCurrency(value, true).withStyle(ChatFormatting.GOLD)));
 
         if (stack.getCount() > 1) {
-            tooltipList.add(new TranslatableComponent("ce.lore.coin.value").withStyle(ChatFormatting.GRAY).append(" (" + stack.getCount() + "): ").append(CurrencyHelper.formatCurrency(value * stack.getCount()).withStyle(ChatFormatting.GOLD)));
+            tooltipList.add(new TranslatableComponent("ce.lore.coin.value").withStyle(ChatFormatting.GRAY).append(" (" + stack.getCount() + "): ").append(CurrencyHelper.formatCurrency(value * stack.getCount(), true).withStyle(ChatFormatting.GOLD)));
         }
     }
 

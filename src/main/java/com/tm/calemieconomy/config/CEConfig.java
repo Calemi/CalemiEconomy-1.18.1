@@ -51,8 +51,8 @@ public class CEConfig {
 
     public static class CategoryEconomy {
 
-        public final ForgeConfigSpec.ConfigValue<Integer> walletCurrencyCapacity;
-        public final ForgeConfigSpec.ConfigValue<Integer> bankCurrencyCapacity;
+        public final ForgeConfigSpec.ConfigValue<Long> walletCurrencyCapacity;
+        public final ForgeConfigSpec.ConfigValue<Long> bankCurrencyCapacity;
         public final ForgeConfigSpec.ConfigValue<Boolean> tradingPostBroadcasts;
         public final ForgeConfigSpec.ConfigValue<Integer> tradingPostBroadcastDelay;
         public final ForgeConfigSpec.ConfigValue<Boolean> tradingPostOverlay;
@@ -66,10 +66,10 @@ public class CEConfig {
             builder.push("Economy");
 
             walletCurrencyCapacity = builder.comment("Wallet Currency Capacity", "The max amount of currency the Wallet can store.")
-                    .defineInRange("walletCurrencyCapacity", 1000000, 0, 99999999);
+                    .defineInRange("walletCurrencyCapacity", 9000000000000000L, 0L, 9000000000000000L);
 
             bankCurrencyCapacity = builder.comment("Bank Currency Capacity", "The max amount of currency the Bank can store.")
-                    .defineInRange("bankCurrencyCapacity", 1000000, 1, 99999999);
+                    .defineInRange("bankCurrencyCapacity", 9000000000000000L, 0L, 9000000000000000L);
 
             tradingPostBroadcasts = builder.comment("Trading Post Broadcasts", "Disable this to disallow Players broadcasting their Trading Posts")
                     .define("tradingPostBroadcasts", true);

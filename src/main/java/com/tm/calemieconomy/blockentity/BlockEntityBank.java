@@ -16,6 +16,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -30,7 +31,8 @@ import java.util.List;
 public class BlockEntityBank extends BlockEntityContainerBase implements ISecurityHolder, IBlockCurrencyHolder, ICurrencyNetwork {
 
     private final SecurityProfile profile = new SecurityProfile();
-    private int currency;
+    private long currency;
+    private long transactionAmount = 1;
 
     private boolean isOnlyConnectedBank = true;
 
@@ -94,7 +96,7 @@ public class BlockEntityBank extends BlockEntityContainerBase implements ISecuri
 
         if (stack.getItem() instanceof ItemCoin) {
 
-            int amountToAdd = ((ItemCoin) stack.getItem()).value;
+            long amountToAdd = ((ItemCoin) stack.getItem()).value;
             int countToRemove = 0;
 
             for (int i = 0; i < stack.getCount(); i++) {
@@ -126,6 +128,15 @@ public class BlockEntityBank extends BlockEntityContainerBase implements ISecuri
         return connectedUnits;
     }
 
+    public long getTransactionAmount() {
+        return transactionAmount;
+    }
+
+    public void setTransactionAmount(long value) {
+        value = Mth.clamp(value, 1, CEConfig.economy.bankCurrencyCapacity.get());
+        transactionAmount = value;
+    }
+
     /**
      * Security Methods
      */
@@ -137,36 +148,37 @@ public class BlockEntityBank extends BlockEntityContainerBase implements ISecuri
 
     /**
      * Currency Methods
+     * @return
      */
 
     @Override
-    public int getCurrency() {
+    public long getCurrency() {
         return currency;
     }
 
     @Override
-    public int getCurrencyCapacity() {
+    public long getCurrencyCapacity() {
         return CEConfig.economy.bankCurrencyCapacity.get();
     }
 
     @Override
-    public void setCurrency(int amount) {
+    public void setCurrency(long amount) {
         currency = amount;
         markUpdated();
     }
 
     @Override
-    public boolean canDepositCurrency(int amount) {
+    public boolean canDepositCurrency(long amount) {
         return getCurrency() + amount <= getCurrencyCapacity();
     }
 
     @Override
-    public boolean canWithdrawCurrency(int amount) {
+    public boolean canWithdrawCurrency(long amount) {
         return getCurrency() >= amount;
     }
 
     @Override
-    public void depositCurrency(int amount) {
+    public void depositCurrency(long amount) {
 
         if (canDepositCurrency(amount)) {
             setCurrency(getCurrency() + amount);
@@ -176,7 +188,7 @@ public class BlockEntityBank extends BlockEntityContainerBase implements ISecuri
     }
 
     @Override
-    public void withdrawCurrency(int amount) {
+    public void withdrawCurrency(long amount) {
 
         if (canWithdrawCurrency(amount)) {
             setCurrency(getCurrency() - amount);
@@ -219,6 +231,7 @@ public class BlockEntityBank extends BlockEntityContainerBase implements ISecuri
         super.load(tag);
         profile.loadFromNBT(tag);
         currency = CurrencyHelper.loadFromNBT(tag);
+        transactionAmount = tag.getLong("TransactionAmount");
         isOnlyConnectedBank = tag.getBoolean("OnlyBank");
     }
 
@@ -227,6 +240,7 @@ public class BlockEntityBank extends BlockEntityContainerBase implements ISecuri
         super.saveAdditional(tag);
         profile.saveToNBT(tag);
         CurrencyHelper.saveToNBT(tag, currency);
+        tag.putLong("TransactionAmount", transactionAmount);
         tag.putBoolean("OnlyBank", isOnlyConnectedBank);
     }
 }

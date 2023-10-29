@@ -1,2 +1,31 @@
+[v1.0.16]
+- Trading Posts can now be automated with pipes.
+- Wallets cannot be opened if the stack size is greater than 1.
+- Wallets cannot be withdrawn or deposited to in a Bank if the stack size is greater than 1.
+
+[v1.0.15]
+- Synced modifiers to clients.
+
+[v1.0.14]
+- Added customizable modifiers to admin Trading Posts.
+
+[v1.0.13]
+- Fixed /trades commands not working on unloaded Trading Posts.
+
+[v1.0.12]
+- Trading Posts now also auto-inject their values.
+- Attempt to fix double-click Trading Posts when security is disabled.
+
+[v1.0.11]
+- Fixed permission issue with commands.
+
+[v1.0.10]
+- Fixed some dynamic price bugs.
+- Added sell all button.
+
+[v1.0.1]
+- Updated to minecraft version to 1.18.2
+- Updated forge version to 40.1.2
+
 [v1.0.0]
--Initial Build
+- Initial Build

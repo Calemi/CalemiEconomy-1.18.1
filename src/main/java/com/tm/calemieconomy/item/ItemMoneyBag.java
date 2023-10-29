@@ -48,12 +48,12 @@ public class ItemMoneyBag extends Item {
 
         if (isRich) {
             SoundHelper.playAtPlayer(player, InitSounds.MONEY_BAG_RICH.get(), 0.1F, 1F);
-            giveCoins(level, player, CEConfig.economy.cheapMoneyBagMin.get(), CEConfig.economy.cheapMoneyBagMax.get());
+            giveCoins(level, player, CEConfig.economy.richMoneyBagMin.get(), CEConfig.economy.richMoneyBagMax.get());
         }
 
         else {
             SoundHelper.playAtPlayer(player, InitSounds.MONEY_BAG_CHEAP.get(), 0.1F, 1F);
-            giveCoins(level, player, CEConfig.economy.richMoneyBagMin.get(), CEConfig.economy.richMoneyBagMax.get());
+            giveCoins(level, player, CEConfig.economy.cheapMoneyBagMin.get(), CEConfig.economy.cheapMoneyBagMax.get());
         }
 
         return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
