@@ -3,6 +3,7 @@ package com.tm.calemieconomy.blockentity;
 import com.tm.calemicore.util.Location;
 import com.tm.calemicore.util.blockentity.BlockEntityContainerBase;
 import com.tm.calemicore.util.helper.LogHelper;
+import com.tm.calemicore.util.helper.StringHelper;
 import com.tm.calemieconomy.file.DirtyFile;
 import com.tm.calemieconomy.file.TradesFile;
 import com.tm.calemieconomy.init.InitBlockEntityTypes;
@@ -247,6 +248,20 @@ public class BlockEntityTradingPost extends BlockEntityContainerBase implements 
     public TextComponent getLocationInfo() {
         TextComponent message = new TextComponent("");
         message.append(ChatFormatting.GOLD + getLocation().toString());
+        return message;
+    }
+
+    public TextComponent getStockInfo() {
+        TextComponent message = new TextComponent("Stock: ");
+
+        if (getStock() < tradeAmount) {
+            message.append(ChatFormatting.RED + "Out of stock!");
+        }
+
+        else {
+            message.append(ChatFormatting.GOLD + StringHelper.insertCommas(getStock()));
+        }
+
         return message;
     }
 

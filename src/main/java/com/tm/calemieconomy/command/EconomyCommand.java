@@ -2,13 +2,16 @@ package com.tm.calemieconomy.command;
 
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import com.tm.calemicore.util.helper.LogHelper;
 import com.tm.calemieconomy.blockentity.BlockEntityTradingPost;
 import com.tm.calemieconomy.file.DirtyFile;
 import com.tm.calemieconomy.file.ScheduledRandomPriceModifier;
 import com.tm.calemieconomy.file.ScheduledRandomPriceModifiersFile;
 import com.tm.calemieconomy.file.TradesFile;
+import com.tm.calemieconomy.main.CEReference;
 import com.tm.calemieconomy.util.TradingPostHelper;
 import com.tm.calemieconomy.util.helper.CurrencyHelper;
 import net.minecraft.ChatFormatting;
@@ -18,10 +21,10 @@ import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.commands.arguments.item.ItemArgument;
 import net.minecraft.commands.arguments.item.ItemInput;
+import net.minecraft.commands.arguments.selector.EntitySelector;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.world.entity.player.Player;
 
 public class EconomyCommand {
 
@@ -84,8 +87,10 @@ public class EconomyCommand {
 
             for (BlockEntityTradingPost post : TradingPostHelper.allTradingPosts.values()) {
 
+                if (post.getStackForSale().isEmpty()) continue;
+
                 if (post.getStackForSale().getItem() == (itemInput.getItem())) {
-                    MutableComponent info = post.getTradeInfo().append(" ").append(post.getPriceInfo(false)).append(" ").append(new TranslatableComponent(post.msgKey + "at")).append(" ").append(post.getLocationInfo());
+                    MutableComponent info = post.getTradeInfo().append(" ").append(post.getPriceInfo(false)).append(" ").append(new TranslatableComponent(post.msgKey + "at")).append(" ").append(post.getLocationInfo()).append(" ").append(post.getStockInfo());
                     ctx.getSource().getPlayerOrException().sendMessage(info, Util.NIL_UUID);
                     foundPost = true;
                 }
@@ -104,9 +109,9 @@ public class EconomyCommand {
 
     private static ArgumentBuilder<CommandSourceStack, ?> findByPlayer() {
 
-        return Commands.literal("findbyplayer").then(Commands.argument("playerName", EntityArgument.player()).executes(ctx -> {
+        return Commands.literal("findbyplayer").then(Commands.argument("playerName", StringArgumentType.word()).executes(ctx -> {
 
-            Player player = EntityArgument.getPlayer(ctx, "playerName");
+            String playerName = StringArgumentType.getString(ctx, "playerName");
 
             boolean foundPost = false;
 
@@ -114,12 +119,10 @@ public class EconomyCommand {
 
             for (BlockEntityTradingPost post : TradingPostHelper.allTradingPosts.values()) {
 
-                if (post.adminMode) {
-                    continue;
-                }
+                if (post.adminMode || post.getStackForSale().isEmpty()) continue;
 
-                if (post.getSecurityProfile().isOwner(player)) {
-                    MutableComponent info = post.getTradeInfo().append(" ").append(post.getPriceInfo(false)).append(" ").append(new TranslatableComponent(post.msgKey + "at")).append(" ").append(post.getLocationInfo());
+                if (post.getSecurityProfile().getOwnerName().equalsIgnoreCase(playerName)) {
+                    MutableComponent info = post.getTradeInfo().append(" ").append(post.getPriceInfo(false)).append(" ").append(new TranslatableComponent(post.msgKey + "at")).append(" ").append(post.getLocationInfo()).append(" ").append(post.getStockInfo());
                     ctx.getSource().getPlayerOrException().sendMessage(info, Util.NIL_UUID);
                     foundPost = true;
                 }
